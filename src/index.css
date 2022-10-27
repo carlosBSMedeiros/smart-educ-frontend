@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+:root {
+  --color-1: #051932;
+  --color-2: #093364;
+  --color-3: #2A7AE4;
+  --color-4: #E4E8F0;
+  --color-5: #F9FBFD;
+
+}
+
+.btn-cor-5{
+  background-color: var(--color-2);
+  color: white;
+}
+
+.btn-cor-5:hover{
+  color: white !important;
+  background-color: var(--color-1);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
+    background-color: #F9FBFD;
+}
+p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+a, a:hover {
+  text-decoration: none;
+  color: unset;
+}
+
+i{
+  text-decoration: none;
+  font-style: normal;
+}
+
+.remove-gutter{
+  --bs-gutter-x: 0 IMp !important;
+}

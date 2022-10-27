@@ -1,0 +1,36 @@
+.wrapperTrilhas{
+    overflow-y: hidden;
+    max-width: 100vw;
+}
+
+.cardTrilha{
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+    width: 380px;
+    margin-bottom: 2rem;
+    background-color: var(--color-4);
+    border: 1px solid var(--color-3);
+    border-radius: 10px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
+    transition: all .3s ease-in-out 0s;
+}
+
+.cardTrilha:hover{
+    transform: translateY(-6px); 
+    cursor: pointer;  
+}
+
+.cardTrilhaHeader{
+    background-color: var(--color-3);
+    border-radius: 10px 10px 0 0;
+    color: white;
+    font: 700;
+    box-sizing: border-box;
+    padding: 0.8rem;
+    font-size: 1.6rem;
+}
+
+.cardTrilhaBody{
+    padding: 0.5rem;
+}

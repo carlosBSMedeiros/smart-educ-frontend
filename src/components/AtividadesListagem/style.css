@@ -1,0 +1,21 @@
+.container-atividades{
+    border: 1px solid var( --color-2);
+    border-radius: 5px;
+    min-height: 50vh;
+    padding: 2rem 4rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    align-items: center
+}
+
+.container-atividades::-webkit-scrollbar {
+    width: 6px;             
+  }
+  
+.container-atividades::-webkit-scrollbar-thumb {
+    background-color: var(--color-3);  
+    border-radius: 20px;      
+  }
+
