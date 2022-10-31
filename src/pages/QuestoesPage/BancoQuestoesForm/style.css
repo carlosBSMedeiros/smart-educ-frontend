@@ -6,6 +6,7 @@
   padding-top: 5em;
 }
 
+
 .form .title-form{
   padding: 5px 5rem;
   font-size: 1.3rem;
@@ -51,4 +52,34 @@
 
 .content-cards .card{
   margin: 0.5rem 0;
+}
+
+.text-area{
+  width: 100%;
+}
+
+.alternativa {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.centraliza{
+  justify-content: center;
+  display:flex;
+}
+
+
+.header-questoes{
+  margin-top: 20px;
+  justify-content: left;
+  display:flex;
+}
+
+.header-questoes button{
+  margin-left: 10px;
+  display:flex;
+}
+
+.btn-salvar{
+  margin-left: 5px;
 }
