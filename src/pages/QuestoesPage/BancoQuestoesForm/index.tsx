@@ -15,10 +15,7 @@ declare interface Props {
   isNovo: boolean;
 }
 
-
 function BancoQuestoesForm({ isNovo }: Props) {
-
-
   
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(false);
@@ -137,7 +134,6 @@ function BancoQuestoesForm({ isNovo }: Props) {
       .then(response => {
         setBancoQuestao(response.data as BancoQuestao)
         setQuestoes(bancoQuestao.questoes)
-        alert(questoes.length)
         
         carregandoRef.close()
       }).catch(error => {

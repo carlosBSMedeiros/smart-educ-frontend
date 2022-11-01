@@ -27,15 +27,23 @@ var funcTrilhas: funcionalidadeInfos = {
     rota: "trilhas",
     icone: TrilhasIcon
 }
+
 var funcQuestoes: funcionalidadeInfos = {
     label: "Questões",
     rota: "banco-questoes",
     icone: QuestoesIcon
 }
+
 var funcRanking: funcionalidadeInfos = {
     label: "Ranking",
     rota: "ranking",
     icone: RankingIcon
+}
+
+var funcAlunoTurma: funcionalidadeInfos = {
+    label: "Turmas",
+    rota: "alunoTurma",
+    icone: TurmasIcon
 }
 
 var funcionalidadesProf: funcionalidadeInfos[] = []
@@ -48,6 +56,7 @@ funcionalidadesProf.push(funcQuestoes)
 funcionalidadesProf.push(funcRanking)
 
 funcionalidadesAluno.push(funcMaterias)
+funcionalidadesAluno.push(funcAlunoTurma)
 funcionalidadesAluno.push(funcTrilhas)
 funcionalidadesAluno.push(funcRanking)
 
