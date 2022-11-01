@@ -1,0 +1,25 @@
+.wrappers{
+    overflow-y: hidden;
+    max-width: 100vw;
+}
+
+img{
+    margin-top: 6px;
+    margin-left: 5px;
+    display: inline;
+    width: 30px;
+    height: 30px;
+}
+
+.display-inline{
+    display: inline;
+}
+
+.pontos{
+    margin-left: 60px;
+    float: right;
+}
+
+.nome{
+    margin-right: 40px;
+}

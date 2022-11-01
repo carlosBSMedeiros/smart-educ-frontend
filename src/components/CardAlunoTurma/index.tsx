@@ -9,7 +9,7 @@ function CardAlunoTurma({ alunoTurma }: Props) {
 
     return (
         <div className="col-md-4 d-flex justify-content-center">
-            <Link to={{ pathname: `/alunoTurma/${alunoTurma.id}`, }}>
+            <Link to={{ pathname: `/alunoTurma/ranking/${alunoTurma.idTurma}`, }}>
                 <div className="card">
                     <div className="cardHeader">
                         {alunoTurma.codigoTurma}
