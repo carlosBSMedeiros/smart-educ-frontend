@@ -7,5 +7,6 @@ export type TrilhaRequest={
     idProfessor:string,
     concluida:boolean,
     nomeMateria:string,
-    quantAtividades:number
+    quantAtividades:number,
+    quantConcluido:number
 }

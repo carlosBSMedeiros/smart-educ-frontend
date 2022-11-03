@@ -1,5 +1,6 @@
 .card-atividade{
     display: flex;
+    position: relative;
     flex-direction: column;
     height: 150px;
     width: 200px;
@@ -10,18 +11,38 @@
     transition: all .3s ease-in-out 0s;
 }
 
-.card-atividade:hover{
+.card-atividade-desabilitada{
+    display: none;
+    position: absolute;
+    background-color: #3a37376c;
+    z-index: 3;
+    height: 150px;
+    width: 200px;
+    border-radius: 10px;
+}
+
+.card-atividade.professor:hover,
+.card-atividade.aluno.conc:hover,
+.card-atividade.aluno.conc + .card-atividade-ligacao + .card-atividade.aluno.nao-conc:hover{
     transform: scale(1.1); 
     cursor: pointer;  
+}
+
+.card-atividade.aluno.nao-conc .card-atividade-desabilitada{
+    display: block ;
+}
+
+.card-atividade.aluno.conc + .card-atividade-ligacao + .card-atividade.aluno.nao-conc .card-atividade-desabilitada{
+    display: none !important;
 }
 
 .card-atividade-header{
     background-color: var(--color-1);
     border-radius: 10px 10px 0 0;
     border-color: var(--color-1);
+    box-sizing: border-box;
     color: white;
     font: 700;
-    box-sizing: border-box;
     padding: 0.7rem;
     font-size: 1.1rem;
 }
@@ -47,4 +68,12 @@
     width: 100px;
     min-height: 1rem;
     background-color: var(--color-3);
+}
+
+.label-ativ-conc{
+    color: green;
+}
+
+.label-ativ-nao-conc{
+    color: red;
 }

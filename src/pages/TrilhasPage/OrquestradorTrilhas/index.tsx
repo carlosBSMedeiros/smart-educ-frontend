@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAutenticacaoContext } from "../../../context/AutenticacaoContext";
+import TrilhaAluno from "../TrilhaAluno";
 import TrilhasForm from "../TrilhasForm";
 
 declare interface Props{
@@ -12,7 +13,7 @@ function OrquestradorTrilhas({isNovo}:Props){
 
     let tipoUsuario = autenticador.usuario.tipoUsuario
     if (tipoUsuario === 'ALUNO') {
-        return <TrilhasForm isNovo={isNovo} />
+        return <TrilhaAluno />
     } else if(tipoUsuario === 'PROFESSOR' || tipoUsuario ==='ADMIN' ) {
         return <TrilhasForm isNovo={isNovo} />
     } else{

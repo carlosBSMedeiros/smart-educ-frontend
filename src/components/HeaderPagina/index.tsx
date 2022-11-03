@@ -14,7 +14,7 @@ declare interface Props{
 function HeaderPagina({titulo}:Props){
     return (
         <HeaderPai>
-            <h1><b>{titulo}</b></h1>
+            <h2><b>{titulo}</b></h2>
         </HeaderPai>
     )
 }

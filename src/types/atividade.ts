@@ -6,7 +6,7 @@ export type Atividade = {
     idBancoQuestao: string,
     tipoAtividade: string,
     contudoTexto: string,
-    concluida: string,
+    concluida: boolean,
     quantConcluido:number
 }
 

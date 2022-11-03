@@ -30,7 +30,8 @@ function TrilhasForm({ isNovo }: Props) {
         idProfessor: autenticador.usuario.idUsuario,
         titulo: "",
         nomeMateria: "",
-        quantAtividades: 0
+        quantAtividades: 0,
+        quantConcluido: 0
     })
 
     isNovo = (!trilha.id || trilha.id.trim() === "")

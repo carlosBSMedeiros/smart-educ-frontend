@@ -42,7 +42,43 @@ var AtividadesListagemProf = function({idTrilha}: Props){
     )
 }
 
+var AtividadesListagemAluno = function({idTrilha}: Props){
+   
+    const [atividades, setAtividades] = useState<Atividade[]>([])
+
+    useEffect(() => {
+        recuperarAtividadesIdTrilha(idTrilha).then((response)=>{
+            var atividadesAux = response.data as Atividade[]
+            atividadesAux[0].concluida = true
+            setAtividades(atividadesAux)
+        }).catch((erro) =>{
+            console.log(erro)
+            erroGenericoBuilder.buildStr('Ocorreu um erro ao recuperar as atividades da trilha aberta!')
+        })
+       
+    }, [])
+
+    return (
+        <div className="container-atividades aluno">
+            {atividades.map((atv, i)=>{
+                if(i < atividades.length - 1){
+                    return (
+                        <>
+                            <CardAtividade key={atv.id} atividade={atv}/>
+                            <CardAtividadeLigacao/>
+                        </>
+                    )
+                }
+                return (
+                    <CardAtividade key={atv.id} atividade={atv}/>
+                )
+            })}
+        </div>
+    )
+}
 
 
-export {AtividadesListagemProf}
+
+
+export {AtividadesListagemProf, AtividadesListagemAluno}
 

@@ -1,0 +1,26 @@
+.trilhas-infos{
+    margin-top: 2rem;
+}
+
+.trilhas-infos-tit-mat{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.barra-progresso-pai{
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.barra-progresso-pai p {
+    font-size: 1.25rem;
+}
+
+#barra-progresso-trilha-aluno{
+    width: 33%;
+}
+
+.atividades-aluno-pai{
+    margin-top: 2rem;
+}

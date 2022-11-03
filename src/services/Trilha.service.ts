@@ -17,6 +17,10 @@ export function recuperarTrilhasIdProfessor(idProfessor:string){
     return http.get(`/trilha/professor/${idProfessor}`)
 }
 
+export function recuperarTrilhasAluno(){
+    return http.get('/trilha')
+}
+
 export function recuperarPorId(id:string){
     return http.get(`/trilha/${id}`)
 }

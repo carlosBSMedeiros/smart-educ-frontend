@@ -6,7 +6,7 @@ import png from '../../assets/add.png'
 import { Link } from "react-router-dom"
 import { TrilhaRequest } from "../../types/trilha"
 import CardTrilha from "../../components/CardTrilha"
-import { recuperarTrilhasIdProfessor } from "../../services/Trilha.service"
+import { recuperarTrilhasIdProfessor, recuperarTrilhasAluno } from "../../services/Trilha.service"
 import { erroGenericoBuilder,carregando } from "../../components/Alerts"
 import { useAutenticacaoContext } from "../../context/AutenticacaoContext"
 
@@ -37,6 +37,44 @@ const NovaTrilhaButton = styled.button`
 //#endregion
 
 function TrilhasPage() {
+    var autenticador = useAutenticacaoContext();
+    if(autenticador.usuario.tipoUsuario === 'ALUNO'){
+        return <TrilhasPageAluno/>
+    } else{
+        return <TrilhasPageProfessor/>
+    }
+}
+
+function TrilhasPageAluno(){
+    const [trilhas, setTrilhas] = useState<TrilhaRequest[]>([])
+
+    useEffect(() => {
+        var carregandoObj = carregando;
+        carregandoObj.fire()
+        recuperarTrilhasAluno()
+            .then(response => {
+                carregandoObj.close()
+                setTrilhas(response.data as TrilhaRequest[])
+            }).catch(error => {
+                erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar suas trilhas!').fire()
+            })
+    }, [])
+
+    return (
+        <>
+            <HeaderPagina titulo="Trilhas" />
+            <div className="row mt-4 p-4 wrapperTrilhas">
+                {
+                    trilhas.map(e => {
+                        return <CardTrilha key={e.id} trilha={e}/>
+                    })
+                }
+            </div>
+        </>
+    )
+}
+
+function TrilhasPageProfessor(){
     var autenticador = useAutenticacaoContext();
     const [trilhas, setTrilhas] = useState<TrilhaRequest[]>([])
 
