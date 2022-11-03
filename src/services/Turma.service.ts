@@ -22,6 +22,10 @@ export function recuperarPorId(id:string){
     return http.get(`/turma/${id}`)
 }
 
+export function getByCodigo(codigo:string){
+    return http.get(`/turma/codigo/${codigo}`)
+}
+
 export function validarTurma(turma: Turma){
 
     var erros: string[] = []

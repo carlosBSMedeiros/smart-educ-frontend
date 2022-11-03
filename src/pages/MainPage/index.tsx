@@ -4,12 +4,13 @@ import HomePage from '../HomePage'
 import MateriasPage from "../MateriasPage"
 import TrilhasPage from "../TrilhasPage"
 import TurmasPage from "../TurmasPage"
+import AlunoTurmaPage from "../AlunoTurmaPage"
 import OrquestradorTrilhas from "../TrilhasPage/OrquestradorTrilhas"
 import QuestoesPage from "../QuestoesPage"
 import OrquestradorBancoQuestoes from "../QuestoesPage/OrquestradorBancoQuestoes"
 import OrquestradorMaterias from "../MateriasPage/OrquestradorMaterias"
-import OrquestradorQuestoes from "../QuestoesPage/OrquestradorQuestoes"
 import OrquestradorTurmas from "../TurmasPage/OrquestradorTurmas"
+import AlunoTurmasPage from "../AlunoTurmaPage"
 
 function MainPage() {
     return (
@@ -31,8 +32,10 @@ function MainPage() {
                 <Route path="/banco-questoes" element={<QuestoesPage />}/>
                 <Route path="/banco-questoes/novo" element={<OrquestradorBancoQuestoes isNovo={true} />}/>
                 <Route path="/banco-questoes/:id" element={<OrquestradorBancoQuestoes isNovo={false} />}/>
-                <Route path="/questoes/novo" element={<OrquestradorQuestoes isNovo={true} />}/>
-                <Route path="/questoes/:id" element={<OrquestradorQuestoes isNovo={false} />}/>
+
+
+                <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
+
             </Routes>
         </>
     )
