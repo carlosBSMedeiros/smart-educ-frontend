@@ -25,6 +25,10 @@ export function recuperarPorId(id:string){
     return http.get(`/trilha/${id}`)
 }
 
+export function recuperarParaAluno(idTrilha:string, idAluno:string){
+    return http.get(`/trilha/aluno/${idAluno}/trilha/${idTrilha}`)
+}
+
 export function validarTrilha(trilha: TrilhaRequest){
 
     var erros: string[] = []

@@ -2,31 +2,29 @@ import './style.css'
 import { useState, useEffect } from "react"
 import { useAutenticacaoContext } from '../../../context/AutenticacaoContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TrilhaRequest } from '../../../types/trilha';
+import { TrilhaAlunoRequest } from '../../../types/trilha';
 import { carregando, erroGenericoBuilder } from '../../../components/Alerts';
-import { recuperarPorId } from '../../../services/Trilha.service';
+import { recuperarParaAluno } from '../../../services/Trilha.service';
 import HeaderPagina from '../../../components/HeaderPagina';
-import { AtividadesListagemAluno } from '../../../components/AtividadesListagem';
+import { AtividadesListagemAluno } from '../../../components/AtividadesListagem/AtividadesListagemAluno';
+import { Progress } from 'reactstrap';
+
 
 
 function TrilhaAluno() {
 
     var autenticador = useAutenticacaoContext();
-    var navegacao = useNavigate();
     let { id } = useParams();
-    var pctgTrilhaConc:number = 100;
 
-    const [trilha, setTrilha] = useState<TrilhaRequest>({
+    const [trilha, setTrilha] = useState<TrilhaAlunoRequest>({
         id: id ? id : "",
-        concluida: false,
-        descricao: "",
-        ordem: null,
-        idMateria: "",
-        idProfessor: autenticador.usuario.idUsuario,
         titulo: "",
+        descricao: "",
         nomeMateria: "",
-        quantAtividades: 0,
-        quantConcluido: 0
+        quantAtividade: 0,
+        quantConcluido: 0,
+        concluida: false,
+        atividadesTrilhaDTOs: []
     })
 
     useEffect(() => {
@@ -35,16 +33,23 @@ function TrilhaAluno() {
         }
         var carregandoRef = carregando
         carregandoRef.fire()
-        recuperarPorId(trilha.id)
+        recuperarParaAluno(trilha.id, autenticador.usuario.idUsuario)
             .then(response => {
                 carregandoRef.close()
-                var newTrilha = response.data as TrilhaRequest
-                newTrilha.quantConcluido = 1
+                var newTrilha = response.data as TrilhaAlunoRequest
+                console.log(newTrilha)
                 setTrilha(newTrilha)
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados da sua trilha!').fire()
             })
     }, [])
+
+    var pctgTrilhaConc: number = calcularPctgConcTrilha();
+
+    function calcularPctgConcTrilha(){
+        let result =  Math.trunc(trilha.quantConcluido * 100 / trilha.quantAtividade);
+        return result;
+    }
 
     return (
         <>
@@ -65,18 +70,18 @@ function TrilhaAluno() {
                 </div>
                 <div className="barra-progresso-pai">
                     <p>{pctgTrilhaConc}% da Trilha foi concluída. {getMensagemPorcentagemTrilha(pctgTrilhaConc)}</p>
-                    <div className="progress">
-                        <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" id='barra-progresso-trilha-aluno' role="progressbar"></div>
-                    </div>
+                    <Progress animated color="success" value={pctgTrilhaConc}/>
                 </div>
                 <div className='atividades-aluno-pai'>
-                    <AtividadesListagemAluno idTrilha={trilha.id}></AtividadesListagemAluno>
+                    <AtividadesListagemAluno atividadesParam={trilha.atividadesTrilhaDTOs}></AtividadesListagemAluno>
                 </div>
             </div>
         </>
     )
 
 }
+
+
 
 function getMensagemPorcentagemTrilha(pctg:number){
     if(pctg <= 25){

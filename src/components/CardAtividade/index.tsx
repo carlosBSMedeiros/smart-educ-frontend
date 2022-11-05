@@ -1,5 +1,5 @@
 import './style.css'
-import { Atividade } from '../../types/atividade'
+import { Atividade, AtividadeAluno } from '../../types/atividade'
 import { TipoAtividade } from '../../types/atividade'
 import { getTipoAtividadeCompleto } from '../../utils/tiposAtividades'
 import { useAutenticacaoContext } from '../../context/AutenticacaoContext'
@@ -8,23 +8,20 @@ declare interface Props {
     atividade: Atividade
 }
 
-export function CardAtividade({ atividade }: Props) {
-
-    var autenticador = useAutenticacaoContext();
-    let tipoAtv: TipoAtividade = getTipoAtividadeCompleto(atividade.tipoAtividade)
-
-    if (autenticador.usuario.tipoUsuario === 'ALUNO') {
-       return CardAtividadeAluno(atividade,tipoAtv)
-    }
-    else {
-        return CardAtividadeProf(atividade,tipoAtv)
-    }
+declare interface PropsAluno{
+    atividade: AtividadeAluno
 }
 
-function CardAtividadeAluno(atividade:Atividade, tipoAtv:TipoAtividade){
+export function CardAtividade({ atividade }: Props) {
+    return CardAtividadeProf(atividade,getTipoAtividadeCompleto(atividade.tipoAtividade))
+}
 
-    function ativConcluidaOuNao(concluida:boolean){
-        if(concluida){
+export function CardAtividadeAluno({atividade}:PropsAluno){
+
+    var tipoAtv: TipoAtividade = getTipoAtividadeCompleto(atividade.tipoAtividade)
+
+    function ativConcluidaOuNao(concluida:string){
+        if(concluida==="true"){
             return(
                 <b className='label-ativ-conc'>Concluída!</b> 
             )
@@ -35,7 +32,7 @@ function CardAtividadeAluno(atividade:Atividade, tipoAtv:TipoAtividade){
     }
 
     return (
-        <div className={`card-atividade aluno ${atividade.concluida ? 'conc' : 'nao-conc'}`}>
+        <div className={`card-atividade aluno ${atividade.concluida === "true" ? 'conc' : 'nao-conc'}`}>
             <div className='card-atividade-desabilitada'>
             </div>
             <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
