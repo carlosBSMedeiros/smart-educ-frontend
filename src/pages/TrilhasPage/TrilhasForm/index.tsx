@@ -1,14 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react"
 import HeaderPagina from "../../../components/HeaderPagina";
-import { useAutenticacaoContext } from "../../../context/AutenticacaoContext";
 import MateriaSeletor from "../../../public/components/MateriaSeletor";
 import { incluirTrilha, recuperarPorId, validarTrilha, alterarTrilha } from "../../../services/Trilha.service";
 import { excluirTrilha as excluirTrilhaService } from "../../../services/Trilha.service";
 import './style.css'
 import { TrilhaRequest } from '../../../types/trilha'
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../components/Alerts";
-import {AtividadesListagemProf} from '../../../components/AtividadesListagem'
+import { AtividadesListagemProf } from '../../../components/AtividadesListagem'
 import Swal from "sweetalert2";
 
 declare interface Props {
@@ -17,7 +16,6 @@ declare interface Props {
 
 function TrilhasForm({ isNovo }: Props) {
 
-    var autenticador = useAutenticacaoContext();
     var navegacao = useNavigate();
     let { id } = useParams();
 
@@ -25,9 +23,9 @@ function TrilhasForm({ isNovo }: Props) {
         id: id ? id : "",
         concluida: false,
         descricao: "",
-        ordem:null,
+        ordem: null,
         idMateria: "",
-        idProfessor: autenticador.usuario.idUsuario,
+        idProfessor: "",
         titulo: "",
         nomeMateria: "",
         quantAtividades: 0,
@@ -37,7 +35,6 @@ function TrilhasForm({ isNovo }: Props) {
     isNovo = (!trilha.id || trilha.id.trim() === "")
 
     useEffect(() => {
-
         if (!trilha.id || trilha.id.trim() === "") {
             return;
         }
@@ -55,7 +52,6 @@ function TrilhasForm({ isNovo }: Props) {
     var handleInputChange = (e: React.ChangeEvent<HTMLInputElement>
         | React.ChangeEvent<HTMLTextAreaElement>
         | React.ChangeEvent<HTMLSelectElement>) => {
-
         const { name, value } = e.target
         setTrilha({
             ...trilha,
@@ -70,39 +66,39 @@ function TrilhasForm({ isNovo }: Props) {
             return;
         }
         var carregandoRef = carregando
-        if(isNovo){  
-            carregandoRef.fire() 
+        if (isNovo) {
+            carregandoRef.fire()
             incluirTrilha(trilha)
-            .then(response => {
-                carregandoRef.close()
-                navegacao("/trilhas")
-                toastrSucessoBuilder.build('Trilha incluída com sucesso!').fire()
-                setTrilha(response.data as TrilhaRequest)
-            }).catch(error => {
-                erroGenericoBuilder.buildStr('Ocorreu um problema para criar sua nova trilha!').fire()
-            })
-        } else { 
-            carregandoRef.fire() 
-            alterarTrilha(trilha) 
-            .then(response => {
-                carregandoRef.close()
-                navegacao("/trilhas")
-                toastrSucessoBuilder.build('Trilha alterada com sucesso!').fire()
-                setTrilha(response.data as TrilhaRequest)
-            }).catch(error => {
-                erroGenericoBuilder.buildStr('Ocorreu um problema para alterar sua trilha!').fire()
-            })   
+                .then(response => {
+                    carregandoRef.close()
+                    navegacao("/trilhas")
+                    toastrSucessoBuilder.build('Trilha incluída com sucesso!').fire()
+                    setTrilha(response.data as TrilhaRequest)
+                }).catch(error => {
+                    erroGenericoBuilder.buildStr('Ocorreu um problema para criar sua nova trilha!').fire()
+                })
+        } else {
+            carregandoRef.fire()
+            alterarTrilha(trilha)
+                .then(response => {
+                    carregandoRef.close()
+                    navegacao("/trilhas")
+                    toastrSucessoBuilder.build('Trilha alterada com sucesso!').fire()
+                    setTrilha(response.data as TrilhaRequest)
+                }).catch(error => {
+                    erroGenericoBuilder.buildStr('Ocorreu um problema para alterar sua trilha!').fire()
+                })
         }
     }
 
-    function excluirTrilha(){
+    function excluirTrilha() {
         var carregandoRef = carregando
-        carregandoRef.fire() 
-        excluirTrilhaService(trilha.id).then(response =>{
+        carregandoRef.fire()
+        excluirTrilhaService(trilha.id).then(response => {
             carregandoRef.close()
             toastrSucessoBuilder.build('Trilha excluída com sucesso!').fire()
             navegacao("/trilhas")
-        }).catch(erro =>{
+        }).catch(erro => {
             carregandoRef.close()
             erroGenericoBuilder.buildStr('Ocorreu um problema para excluir sua trilha!').fire()
         })
@@ -126,21 +122,9 @@ function TrilhasForm({ isNovo }: Props) {
                                     value={trilha ? trilha.titulo : ""}
                                 />
                             </div>
-                            <div className="form-group col-md-3">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="tituloTrilha">Matéria</label>
-                                <MateriaSeletor name="idMateria" handlePesquisaSelector={handleInputChange} idSelecionar={trilha && trilha.idMateria ? trilha.idMateria : "99"} />
-                            </div>
-
-                            <div className="form-group col-md-3">
-                                <label htmlFor="ordem">Ordem</label>
-                                <input type="number"
-                                    onChange={handleInputChange}
-                                    name="ordem"
-                                    className="form-control"
-                                    id="ordem"
-                                    placeholder="ordem"
-                                    value={trilha.ordem==null?"":trilha.ordem}
-                                />
+                                <MateriaSeletor name="idMateria" handlePesquisaSelector={handleInputChange} idSelecionar={trilha.idMateria ?? "99"} />
                             </div>
 
                         </div>
@@ -158,18 +142,18 @@ function TrilhasForm({ isNovo }: Props) {
                     </form>
                     {getDivBtnPelaOperacao()}
                     {getDivAtividadesPelaOperacao()}
-                    
+
                 </div>
             </div>
         </>
     )
 
     function getDivBtnPelaOperacao() {
-        
-        if(isNovo){
+
+        if (isNovo) {
             return (
                 <div className="botoes-form-div inc">
-                    <button 
+                    <button
                         className="btn btn-cor-5"
                         onClick={handleSubmit}
                     >
@@ -177,16 +161,16 @@ function TrilhasForm({ isNovo }: Props) {
                     </button>
                 </div>
             )
-        } else{
+        } else {
             return (
                 <div className="botoes-form-div alt">
-                    <button 
+                    <button
                         className="btn btn-danger"
                         onClick={abrirModalExclusao}
                     >
                         Excluir
                     </button>
-                    <button 
+                    <button
                         className="btn btn-cor-5"
                         onClick={handleSubmit}
                     >
@@ -195,15 +179,15 @@ function TrilhasForm({ isNovo }: Props) {
                 </div>
             )
         }
-  
+
     }
 
-    function getDivAtividadesPelaOperacao(){
-        if(isNovo){
+    function getDivAtividadesPelaOperacao() {
+        if (isNovo) {
             return <></>
-        } 
+        }
 
-        return (    
+        return (
             <>
                 <div className="container-atividades-header">
                     <h3>Atividades</h3>
@@ -215,7 +199,7 @@ function TrilhasForm({ isNovo }: Props) {
         )
     }
 
-    function abrirModalExclusao(){
+    function abrirModalExclusao() {
         Swal.fire({
             title: 'Tem certeza que deseja excluir essa trilha?',
             text: "Todas as atividades vinculadas a ela, bem como o progresso dos alunos, serão deletados",
@@ -225,12 +209,11 @@ function TrilhasForm({ isNovo }: Props) {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sim, deletar trilha!',
             cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            console.log(result)
+        }).then((result) => {
             if (result.isConfirmed) {
                 excluirTrilha();
             }
-          })
+        })
     }
 }
 

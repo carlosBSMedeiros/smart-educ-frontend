@@ -49,12 +49,7 @@ const DivItemFuncionalidade = styled.div`
 
 `
 
-
 function FuncionalidadeItem({ label, icone, rota }: Props) {
-
-    var isMobile = window.matchMedia("(max-width: 600px)").matches
-    console.log('isMobile', isMobile)
-
 
     return (
         <Link to={"/" + rota}>

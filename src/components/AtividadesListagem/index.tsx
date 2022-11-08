@@ -29,13 +29,13 @@ var AtividadesListagemProf = function({idTrilha}: Props){
                 if(i < atividades.length - 1){
                     return (
                         <>
-                            <CardAtividade key={atv.id} atividade={atv}/>
-                            <CardAtividadeLigacao/>
+                            <CardAtividade key={(i+1)} atividade={atv}/>
+                            <CardAtividadeLigacao key={(i+1)*10}/>
                         </>
                     )
                 }
                 return (
-                    <CardAtividade key={atv.id} atividade={atv}/>
+                    <CardAtividade key={(i+1)} atividade={atv}/>
                 )
             })}
         </div>

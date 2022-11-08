@@ -10,29 +10,24 @@ declare interface Props{
 }
 
 function MateriaSeletor({name, idSelecionar, handlePesquisaSelector}:Props) {
-    var recuperouMaterias = false; 
-    var autenticador = useAutenticacaoContext();
+    const autenticador = useAutenticacaoContext();
 
     useEffect(() => {
         recuperarMateriasIdProfessor(autenticador.usuario.idUsuario)
             .then(response => {
                 setMaterias(response.data as Materia[])
-                recuperouMaterias = true;
             }).catch(error => {
                 alert(error)
             })
     }, [])
 
     const [materias, setMaterias] = useState<Materia[]>();
-    const [idSelecionarEst, setIdSelecionarEst] = useState(idSelecionar)
 
-
-    console.log('idSelecionarEst', idSelecionarEst)
     return (
         <>
             <select 
                 className="form-select form-control"
-                defaultValue={idSelecionarEst ? idSelecionarEst : "99"} 
+                value={idSelecionar} 
                 aria-label="Matérias"
                 name={name}
                 onChange={handlePesquisaSelector}
@@ -44,18 +39,8 @@ function MateriaSeletor({name, idSelecionar, handlePesquisaSelector}:Props) {
                     })
                 }
             </select>
-            {
-               adicionarIconCarregando()
-            }
-            
         </>
     )
-
-    function adicionarIconCarregando(){
-        var returnValue = recuperouMaterias ? ( <i className='fa-circle-o-notch fa-spin' />) : ''
-        return returnValue
-    }
-
 }
 
 export default MateriaSeletor;
