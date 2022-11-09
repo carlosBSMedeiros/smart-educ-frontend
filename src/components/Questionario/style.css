@@ -1,0 +1,88 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.steps-form {
+  background: #fff;
+  padding: 0;
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: 8px 8px 24px #ccc;
+  max-width: 70%;
+  position: relative;
+  overflow: hidden;
+}
+
+.fields-container {
+  padding: 24px 24px 40px;
+  width: 100%;
+}
+
+.steps-form .field {
+  margin-bottom: 16px;
+}
+
+.steps-form .field input {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  max-width: 100%;
+  /* height: 48px; */
+  padding: 8px;
+  font-size: 14px;
+}
+
+.field{
+  display: block;
+}
+
+.botoes{
+  float: right;
+  margin-bottom: 10px;
+}
+
+.button {
+  border: 0;
+  padding: 8px;
+  color: #fff;
+  border-radius: 20px;
+  padding: 16px;
+  outline: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.step-guide {
+  color: #666;
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.alternativas{
+  text-align: left;
+}
+
+.anunciado{
+  margin-bottom: 50px;
+}

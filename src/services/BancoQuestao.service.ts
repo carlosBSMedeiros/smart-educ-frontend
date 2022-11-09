@@ -18,8 +18,8 @@ export async function  recuperarBancoQuestaosIdProfessor(idProfessor:string){
     return await http.get(`/bancoQuestao/professor/${idProf}`)
 }
 
-export function recuperarPorId(id:string){
-    return http.get(`/bancoQuestao/${id}`)
+export async function recuperarPorId(id:string){
+    return await http.get(`/bancoQuestao/${id}`)
 }
 
 export function validarBancoQuestao(BancoQuestao: BancoQuestao){

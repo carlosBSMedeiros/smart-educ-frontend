@@ -6,7 +6,7 @@ import MateriaSeletor from "../../../public/components/MateriaSeletor";
 import { incluirBancoQuestao, recuperarPorId, validarBancoQuestao, alterarBancoQuestao } from "../../../services/BancoQuestao.service";
 import './style.css';
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../components/Alerts";
-import { BancoQuestao } from "../../../types/bancoQuestao";
+import { BancoQuestao } from '../../../types/bancoQuestao';
 import CardQuestao from "../../../components/CardQuestao";
 import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { Questao } from "../../../types/Questao";
@@ -17,6 +17,20 @@ declare interface Props {
 
 function BancoQuestoesForm({ isNovo }: Props) {
   
+  var autenticador = useAutenticacaoContext();
+  var navegacao = useNavigate();
+  let { id } = useParams();  
+
+
+  const [bancoQuestao, setBancoQuestao] = useState<BancoQuestao>({
+    id: id ? id : "",
+    idMateria: "",
+    idProfessor: autenticador.usuario.idUsuario,
+    nomeBanco: "",
+    questoes: [],
+    materia: ""
+  });
+
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(false);
 
@@ -64,25 +78,30 @@ function BancoQuestoesForm({ isNovo }: Props) {
   }
 
   const handleChangeAlternativa = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>) => {
-    let { name, value, id } = e.target
+    let { name, id } = e.target
+    
+    let valor:number = 99;
+
     switch (id) {
       case "quest1":
-        value= "0";
+        valor= 0;
         break;
 
       case "quest2":
-        value= "1";
+        valor= 1;
         break;
 
       case "quest3":
-        value= "2";
+        valor= 2;
         break;
     
       case "quest4":
-        value= "3";
+        valor= 3;
         break;
     }
-    setQuestao({ ...questao, [name]: value })
+    setQuestao({ ...questao, [name]: valor })
+    console.log(questao);
+    
   }
 
   const LimpQuestao = () =>{
@@ -113,6 +132,10 @@ function BancoQuestoesForm({ isNovo }: Props) {
     toggle();
   }
 
+  const handleExcluir = (e : Questao) => {
+    setQuestoes(questoes.filter((item)=>{return item.id !== e.id }))
+  }
+
   const hanlderNovaQuestao = () => {
     setEditando(false);
     toggle();
@@ -123,8 +146,15 @@ function BancoQuestoesForm({ isNovo }: Props) {
     toggle();
   }
 
-  useEffect(() => {
+  useEffect(() => { // esse é responsável em pegar as alterações
+    setQuestoes(bancoQuestao.questoes)
+}, [bancoQuestao]);
 
+  useEffect(() => {
+    carregar();
+  }, [])
+
+  const carregar = () =>{
     if (!bancoQuestao.id || bancoQuestao.id.trim() === "") {
       return;
     }
@@ -133,28 +163,11 @@ function BancoQuestoesForm({ isNovo }: Props) {
     recuperarPorId(bancoQuestao.id)
       .then(response => {
         setBancoQuestao(response.data as BancoQuestao)
-        setQuestoes(bancoQuestao.questoes)
-        
         carregandoRef.close()
       }).catch(error => {
         erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados !').fire()
       })
-  }, [])
-
-
-
-  var autenticador = useAutenticacaoContext();
-  var navegacao = useNavigate();
-  let { id } = useParams();
-
-  const [bancoQuestao, setBancoQuestao] = useState<BancoQuestao>({
-    id: id ? id : "",
-    idMateria: "",
-    idProfessor: autenticador.usuario.idUsuario,
-    nomeBanco: "",
-    questoes: [],
-    materia: ""
-  })
+  }
 
   isNovo = (!bancoQuestao.id || bancoQuestao.id.trim() === "")
 
@@ -265,7 +278,7 @@ function BancoQuestoesForm({ isNovo }: Props) {
           <div className="col-md-6">
             <div className="todo-list">
               {questoes.map((quest: Questao, key: number) => {
-                return <CardQuestao  handleModal = {handleModal} quest={quest} key={key} />
+                return <CardQuestao  handleModal = {handleModal} quest={quest} key={key} excluir={handleExcluir}/>
               })}
             </div>
             
@@ -308,10 +321,18 @@ function BancoQuestoesForm({ isNovo }: Props) {
                             className="form-control  text-area"
                             onChange={handleTextoAlternativa}
                             value={questao ? questao.alternativas[0] : ""}  />
+
                             <div className="todo-input">
-                                <input type="radio" name='resposta' id = "quest1" onChange={handleChangeAlternativa} 
+                              
+                                <input type="radio" 
+                                name='respostaCorreta' 
+                                id = "quest1"
+                                value="alt0" 
+                                checked={questao.respostaCorreta===0}  
+                                onChange={handleChangeAlternativa} 
                                 />
                             </div>
+
                           </div>
                           <div className="form-group col-md-5  alternativa">
                             <label htmlFor="" ><b>II:</b></label>
@@ -319,10 +340,17 @@ function BancoQuestoesForm({ isNovo }: Props) {
                             className="form-control text-area"
                             onChange={handleTextoAlternativa}
                             value={questao ? questao.alternativas[1] : ""}  />
+
                             <div className="alternativa">
-                                <input type="radio" name='resposta' id = "quest2" onChange={handleChangeAlternativa} 
-                                checked={questao.respostaCorreta===1?true:false}/>
+                                <input type="radio" 
+                                name='respostaCorreta' 
+                                id = "quest2"
+                                value="alt1" 
+                                onChange={handleChangeAlternativa} 
+                                checked={questao.respostaCorreta===1} 
+                                />
                             </div>
+
                           </div>
                       </div>
                     </div>
@@ -335,10 +363,17 @@ function BancoQuestoesForm({ isNovo }: Props) {
                           className="form-control text-area"
                           onChange={handleTextoAlternativa}
                           value={questao ? questao.alternativas[2] : ""}  />
+
                           <div className="todo-input">
-                              <input type="radio" name='resposta' id = "quest3" onChange={handleChangeAlternativa} 
-                              checked={questao.respostaCorreta===2?true:false}/>
+                              <input type="radio" 
+                                    name='respostaCorreta' 
+                                    id = "quest3" 
+                                    value="alt2"
+                                    checked={questao.respostaCorreta===2}
+                                    onChange={handleChangeAlternativa} 
+                                    />
                           </div>
+
                         </div>
                         
                         <div className="form-group col-md-5 alternativa">
@@ -347,10 +382,17 @@ function BancoQuestoesForm({ isNovo }: Props) {
                           className="form-control text-area"
                           onChange={handleTextoAlternativa}
                           value={questao ? questao.alternativas[3] : ""}  />
+
                           <div className="todo-input">
-                              <input type="radio" name='resposta' id = "quest4" onChange={handleChangeAlternativa} 
-                              checked={questao.respostaCorreta===3?true:false}/>
+                              <input type="radio" 
+                                      name='respostaCorreta' 
+                                      id = "quest4"
+                                      value="alt3" 
+                                      checked={questao.respostaCorreta===3}
+                                      onChange={handleChangeAlternativa} 
+                                      />
                           </div>
+
                         </div>
                       </div>
                       

@@ -17,7 +17,7 @@ function RankingAluno({ nome, pontos }: Props) {
                 </div>
             </div>
             <div className="display-inline">
-                <img src={medalha} alt="Icone de Banco de Questões" />
+                <img  className='img-rank' src={medalha} alt="Icone de Banco de Questões" />
             </div>
         </div>
     )

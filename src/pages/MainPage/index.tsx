@@ -11,6 +11,7 @@ import OrquestradorBancoQuestoes from "../QuestoesPage/OrquestradorBancoQuestoes
 import OrquestradorMaterias from "../MateriasPage/OrquestradorMaterias"
 import OrquestradorTurmas from "../TurmasPage/OrquestradorTurmas"
 import RankingTurmaPage from "../RankingTurmaPage"
+import QuestionarioPage from "../QuestionarioPage"
 
 function MainPage() {
     return (
@@ -36,6 +37,8 @@ function MainPage() {
 
                 <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
                 <Route path="/alunoTurma/ranking/:id" element={<RankingTurmaPage/>}/>
+
+                <Route path="/questionario" element={<QuestionarioPage/>}/>
 
             </Routes>
         </>
