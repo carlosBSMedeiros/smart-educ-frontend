@@ -14,18 +14,15 @@ import NavbarLateralMobile, { DivMascaraMenuLateral } from "../../components/Nav
 import { MenuLateralProvider } from "../../context/MenuLateralContext"
 import styled from "styled-components"
 
-const MainPageDiv = styled.div`
-    height: 100vh;
-    overflow-y: hidden;
-` 
-
 const MenuPaiStyled = styled.div`
     position: relative;
+    display:flex;
+    align-items: stretch;
 ` 
 
 function MainPage() {
     return (
-        <MainPageDiv>
+        <>
             <MenuLateralProvider>
                 <Navbar/>
                 <MenuPaiStyled>
@@ -55,7 +52,7 @@ function MainPage() {
                 <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
 
             </Routes>
-        </MainPageDiv>
+        </>
     )
 }
 
