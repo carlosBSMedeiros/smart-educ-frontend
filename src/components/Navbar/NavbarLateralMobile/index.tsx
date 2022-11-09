@@ -67,7 +67,7 @@ var NavbarLateralMobile = function () {
     navegador('/login')
   }
 
-  function alterarMenu(){
+  function alterarMenu() {
     menuLateralContext.alterarEstadoMenu()
   }
 
@@ -86,8 +86,12 @@ var NavbarLateralMobile = function () {
 var DivMascaraMenuLateral = function () {
   var menuLateralContext = useMenuLateralContext();
 
+  function alterarMenu() {
+    menuLateralContext.alterarEstadoMenu()
+  }
+
   return (
-    <MascaraMenu open={menuLateralContext.ativado}>
+    <MascaraMenu open={menuLateralContext.ativado} onClick={alterarMenu}>
     </MascaraMenu>
   )
 }
