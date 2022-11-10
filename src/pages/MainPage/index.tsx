@@ -12,6 +12,8 @@ import OrquestradorMaterias from "../MateriasPage/OrquestradorMaterias"
 import OrquestradorTurmas from "../TurmasPage/OrquestradorTurmas"
 import NavbarLateralMobile, { DivMascaraMenuLateral } from "../../components/Navbar/NavbarLateralMobile"
 import { MenuLateralProvider } from "../../context/MenuLateralContext"
+import RankingTurmaPage from "../RankingTurmaPage"
+import QuestionarioPage from "../QuestionarioPage"
 import styled from "styled-components"
 
 const MenuPaiStyled = styled.div`
@@ -50,6 +52,9 @@ function MainPage() {
 
 
                 <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
+                <Route path="/alunoTurma/ranking/:id" element={<RankingTurmaPage/>}/>
+
+                <Route path="/questionario" element={<QuestionarioPage/>}/>
 
             </Routes>
         </>

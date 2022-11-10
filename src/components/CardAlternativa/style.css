@@ -1,0 +1,33 @@
+
+
+.todo-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.todo-content:first-child{
+  margin-top: 15px;
+}
+
+.todo-body{
+  width: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: var(--color-4);
+  border: 1px solid var(--color-3);
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-new-task{
+  margin-right: 5rem;
+}
+
+.todo-inline{
+  display: inline;
+}
+
+.todo-block{
+  display: block;
+}

@@ -1,13 +1,22 @@
-.wrappersAlunoTurma{
+.centralizar{
+    display: flex;
+    justify-content: center;
+}
+
+.tamanho{
+    width: 400px;
+}
+
+
+.wrapperRank{
     overflow-y: hidden;
     max-width: 100vw;
 }
 
-.cardAlunoTurma{
+.cardRank{
     display: flex;
     flex-direction: column;
-    padding: 0;
-    height: 240px;
+    height: auto;
     width: 380px;
     margin-bottom: 2rem;
     background-color: var(--color-4);
@@ -17,12 +26,12 @@
     transition: all .3s ease-in-out 0s;
 }
 
-.cardAlunoTurma:hover{
+.cardRank:hover{
     transform: translateY(-6px); 
     cursor: pointer;  
 }
 
-.cardHeaderAlunoTurma{
+.cardHeaderRank{
     background-color: var(--color-3);
     border-radius: 10px 10px 0 0;
     color: white;
@@ -32,6 +41,6 @@
     font-size: 1.6rem;
 }
 
-.cardBodyAlunoTurma{
+.cardBodyRank{
     padding: 0.5rem;
 }
