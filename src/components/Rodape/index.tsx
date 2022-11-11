@@ -4,12 +4,16 @@ var RodapeStyled = styled.footer`
     display: flex;
     background-color: var(--color-1);
     color: white;
-    height: 4rem;
+    height: 3rem;
     width: 100vw;
     position: absolute;
     bottom: 0;
     align-items: center;
     justify-content: center;
+
+    @media(max-width: 580px) {
+        height: 4rem;
+    }
 `
 
 function Rodape(){
