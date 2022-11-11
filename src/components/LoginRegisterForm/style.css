@@ -2,14 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    background-color: #f8f9fa;
     justify-content: center;
-    box-sizing: border-box;
-    padding: 1.5rem 3rem 0 3rem;
     border-radius: 10px;
-    min-height: 60vh;
-    min-width: 65vh;
-    justify-content: flex-start;
 }
 
 .titulo-form-login{
@@ -18,7 +12,12 @@
 }
 
 .formulario-login{
-    margin-top: 2rem;
+    margin: 2rem 0 0 0 !important;
+    padding: 0;
+}
+
+.formulario-login button{
+    width: 100%;
 }
 
 .formulario-login-label{

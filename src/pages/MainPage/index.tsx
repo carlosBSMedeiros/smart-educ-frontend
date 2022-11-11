@@ -62,7 +62,7 @@ function MainPage() {
                     <Route path="/questionario" element={<QuestionarioPage/>}/>
                 </Routes>
             </MainStyled>
-            <Rodape/>
+            {/* <Rodape/> */}
         </>
     )
 }

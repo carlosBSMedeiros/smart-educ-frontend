@@ -34,14 +34,14 @@ function LoginRegisterForm() {
     return (
         <div className='div-formulario-login-reg'>
             <div className='titulo-form-login'>
-                <h3>Entrar</h3>
+                <h3>Bem Vindo!</h3>
             </div>
             <form className='formulario-login' onSubmit={handleSubmitLogin}>
                 <label className="formulario-login-label">Email</label>
                 <input type="email" className="form-control" id="usuario" name="usuario" onChange={handleInputChange} />
                 <label className="formulario-login-label">Senha</label>
                 <input type="password" className="form-control" id="senha" name="senha" onChange={handleInputChange}/>
-                <button type="submit" className="btn btn-primary col-5 mt-3">login</button>
+                <button type="submit" className="btn btn-cor-5 mt-3">ENTRAR</button>
             </form>
         </div>
     )
