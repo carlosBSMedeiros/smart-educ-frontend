@@ -8,7 +8,7 @@ interface Props {
 }
 
 const DivItemFuncionalidade = styled.div`
-    width: 18rem;
+    width: 16rem;
     background-color: var(--color-4);
     border: 1px solid var(--color-3);
     display: flex;
@@ -24,7 +24,7 @@ const DivItemFuncionalidade = styled.div`
 
     p{
         font-weight: bold;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     &:hover {
@@ -32,20 +32,25 @@ const DivItemFuncionalidade = styled.div`
     }
 
     img {
-        width: 64px;
-        height: 64px;
+        width: 60px;
+        height: 60px;
     }
 
     @media(max-width: 580px) {
 
+        width: 18rem;
         flex-direction: row;
         justify-content: space-around;
         flex-wrap: nowrap;
 
+        p{
+            font-size: 1.5rem;
+        }
+
         img {
             margin-left: 5px;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
         }
     }
 

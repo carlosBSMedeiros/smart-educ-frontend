@@ -7,7 +7,6 @@ import { useState } from "react";
 var HeaderPai = styled.div`
     display:flex;
     justify-content: center;
-    margin-top: 2rem;
     font: bold;
     position: relative;
 

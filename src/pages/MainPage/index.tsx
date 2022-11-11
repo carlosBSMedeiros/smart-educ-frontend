@@ -14,6 +14,7 @@ import NavbarLateralMobile, { DivMascaraMenuLateral } from "../../components/Nav
 import { MenuLateralProvider } from "../../context/MenuLateralContext"
 import RankingTurmaPage from "../RankingTurmaPage"
 import QuestionarioPage from "../QuestionarioPage"
+import Rodape from "../../components/Rodape"
 import styled from "styled-components"
 
 const MenuPaiStyled = styled.div`
@@ -21,6 +22,10 @@ const MenuPaiStyled = styled.div`
     display:flex;
     align-items: stretch;
 ` 
+const MainStyled = styled.main`
+    margin-top: 2rem;
+    margin-bottom: 3rem
+`
 
 function MainPage() {
     return (
@@ -33,30 +38,31 @@ function MainPage() {
                 <DivMascaraMenuLateral/>
             </MenuLateralProvider>
 
-            <Routes>
-                <Route path="/" element={<Navigate to={"/home"}/>}/>
-                <Route path="/*" element={<><h1>Página não encontrada</h1></>}/>
-                <Route path="/home" element={<HomePage />}/>
-                <Route path="/turmas" element={<TurmasPage />}/>
-                <Route path="/turma/novo" element={<OrquestradorTurmas isNovo={true}/>}/>
-                <Route path="/turma/:id" element={<OrquestradorTurmas isNovo={false} />}/>
-                <Route path="/trilhas" element={<TrilhasPage />}/>
-                <Route path="/trilhas/novo" element={<OrquestradorTrilhas isNovo={true} />}/>
-                <Route path="/trilhas/:id" element={<OrquestradorTrilhas isNovo={false} />}/>
-                <Route path="/materias" element={<MateriasPage />}/>
-                <Route path="/materias/novo" element={<OrquestradorMaterias isNovo={true}/>}/>
-                <Route path="/materias/:id" element={<OrquestradorMaterias isNovo={false} />}/>
-                <Route path="/banco-questoes" element={<QuestoesPage />}/>
-                <Route path="/banco-questoes/novo" element={<OrquestradorBancoQuestoes isNovo={true} />}/>
-                <Route path="/banco-questoes/:id" element={<OrquestradorBancoQuestoes isNovo={false} />}/>
+            <MainStyled>
+                <Routes>
+                    <Route path="/" element={<Navigate to={"/home"}/>}/>
+                    <Route path="/*" element={<><h1>Página não encontrada</h1></>}/>
+                    <Route path="/home" element={<HomePage />}/>
+                    <Route path="/turmas" element={<TurmasPage />}/>
+                    <Route path="/turma/novo" element={<OrquestradorTurmas isNovo={true}/>}/>
+                    <Route path="/turma/:id" element={<OrquestradorTurmas isNovo={false} />}/>
+                    <Route path="/trilhas" element={<TrilhasPage />}/>
+                    <Route path="/trilhas/novo" element={<OrquestradorTrilhas isNovo={true} />}/>
+                    <Route path="/trilhas/:id" element={<OrquestradorTrilhas isNovo={false} />}/>
+                    <Route path="/materias" element={<MateriasPage />}/>
+                    <Route path="/materias/novo" element={<OrquestradorMaterias isNovo={true}/>}/>
+                    <Route path="/materias/:id" element={<OrquestradorMaterias isNovo={false} />}/>
+                    <Route path="/banco-questoes" element={<QuestoesPage />}/>
+                    <Route path="/banco-questoes/novo" element={<OrquestradorBancoQuestoes isNovo={true} />}/>
+                    <Route path="/banco-questoes/:id" element={<OrquestradorBancoQuestoes isNovo={false} />}/>
 
+                    <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
+                    <Route path="/alunoTurma/ranking/:id" element={<RankingTurmaPage/>}/>
 
-                <Route path="/alunoTurma" element={<AlunoTurmaPage/>}/>
-                <Route path="/alunoTurma/ranking/:id" element={<RankingTurmaPage/>}/>
-
-                <Route path="/questionario" element={<QuestionarioPage/>}/>
-
-            </Routes>
+                    <Route path="/questionario" element={<QuestionarioPage/>}/>
+                </Routes>
+            </MainStyled>
+            <Rodape/>
         </>
     )
 }
