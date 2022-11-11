@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom"
 import { TrilhaRequest } from "../../types/trilha"
+import styled from "styled-components"
 
 declare interface Props {
     trilha: TrilhaRequest
 }
 
+var CardTrilhaCol = styled.div`
+    padding: 1.5em;
+`
+
 function CardTrilha({ trilha }: Props) {
 
     return (
-        <div className="col-md-4 d-flex justify-content-center">
+        <CardTrilhaCol>
             <Link to={{ pathname: `/trilhas/${trilha.id}`, }}>
                 <div className="cardTrilha ">
                     <div className="cardTrilhaHeader">
@@ -27,7 +32,7 @@ function CardTrilha({ trilha }: Props) {
                     </div>
                 </div>
             </Link>
-        </div>
+        </CardTrilhaCol>
     )
 }
 

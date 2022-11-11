@@ -9,8 +9,6 @@ import HeaderPagina from '../../../components/HeaderPagina';
 import { AtividadesListagemAluno } from '../../../components/AtividadesListagem/AtividadesListagemAluno';
 import { Progress } from 'reactstrap';
 
-
-
 function TrilhaAluno() {
 
     var autenticador = useAutenticacaoContext();
@@ -37,7 +35,6 @@ function TrilhaAluno() {
             .then(response => {
                 carregandoRef.close()
                 var newTrilha = response.data as TrilhaAlunoRequest
-                console.log(newTrilha)
                 setTrilha(newTrilha)
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados da sua trilha!').fire()
@@ -68,16 +65,27 @@ function TrilhaAluno() {
                         <b>descrição: </b>{trilha.descricao}
                     </div>
                 </div>
-                <div className="barra-progresso-pai">
-                    <p>{pctgTrilhaConc}% da Trilha foi concluída. {getMensagemPorcentagemTrilha(pctgTrilhaConc)}</p>
-                    <Progress animated color="success" value={pctgTrilhaConc}/>
-                </div>
+                    { BarraPrograssoTrilha(trilha) }
                 <div className='atividades-aluno-pai'>
                     <AtividadesListagemAluno atividadesParam={trilha.atividadesTrilhaDTOs}></AtividadesListagemAluno>
                 </div>
             </div>
         </>
     )
+
+    function BarraPrograssoTrilha(trilha:TrilhaAlunoRequest){
+        if(trilha === undefined || trilha.atividadesTrilhaDTOs === undefined || trilha.atividadesTrilhaDTOs.length <= 0){
+            return (
+                <div className="barra-progresso-pai">
+                    <p>{pctgTrilhaConc}% da Trilha foi concluída. {getMensagemPorcentagemTrilha(pctgTrilhaConc)}</p>
+                    <Progress animated color="success" value={pctgTrilhaConc} />
+                </div>
+            )
+        } 
+        return (
+            <></>
+        )
+    }
 
 }
 

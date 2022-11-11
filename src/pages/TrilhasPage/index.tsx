@@ -63,7 +63,7 @@ function TrilhasPageAluno(){
     return (
         <>
             <HeaderPagina titulo="Trilhas" />
-            <div className="row mt-4 p-4 wrapperTrilhas">
+            <div className="wrapperTrilhas">
                 {
                     trilhas.map(e => {
                         return <CardTrilha key={e.id} trilha={e}/>

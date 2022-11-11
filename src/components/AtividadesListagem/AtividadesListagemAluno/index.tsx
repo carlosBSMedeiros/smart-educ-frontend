@@ -1,40 +1,54 @@
 import '../style.css'
-import { useState, useEffect } from "react"
-import {recuperarAtividadesIdTrilha} from '../../../services/Atividade.service'
-import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../Alerts/index";
-import {AtividadeAluno} from '../../../types/atividade'
-import { CardAtividade, CardAtividadeAluno, CardAtividadeLigacao } from "../../CardAtividade";
+import { AtividadeAluno } from '../../../types/atividade'
+import { CardAtividadeAluno, CardAtividadeLigacao } from "../../CardAtividade";
 
-
-declare interface Props{
-    atividadesParam:AtividadeAluno[]
+declare interface Props {
+    atividadesParam: AtividadeAluno[]
 }
 
-var AtividadesListagemAluno = function({atividadesParam}:Props){
-   
-    var atividades = atividadesParam
+var AtividadesListagemAluno = function ({ atividadesParam }: Props) {
+
+    var atividades: AtividadeAluno[] = (!atividadesParam || atividadesParam === undefined) ? [] : atividadesParam
     console.log('AtividadesListagemAluno: ', atividades)
 
     return (
-        <div className="container-atividades aluno">
-            {atividades.map((atv, i)=>{
-                if(i < atividades.length - 1){
-                    return (
-                        <>
-                            <CardAtividadeAluno key={atv.id} atividade={atv}/>
-                            <CardAtividadeLigacao key={atv.id+"ligac"}/>
-                        </>
-                    )
+        <>
+            <div className="container-atividades aluno">
+                {
+                    AtividadesListagemContainerInterno(atividades)
                 }
-                return (
-                    <CardAtividadeAluno key={atv.id} atividade={atv}/>
-                )
-            })}
-        </div>
+            </div>
+        </>
     )
 }
 
+function AtividadesListagemContainerInterno(atividades: AtividadeAluno[]) {
 
+    if (atividades.length > 0) {
+        return (
+            <>
+                {
+                    atividades.map((atv, i) => {
+                        if (i < atividades.length - 1) {
+                            return (
+                                <>
+                                    <CardAtividadeAluno key={atv.id} atividade={atv} />
+                                    <CardAtividadeLigacao key={atv.id + "ligac"} />
+                                </>
+                            )
+                        }
+                        return (
+                            <CardAtividadeAluno key={atv.id} atividade={atv} />
+                        )
+                    })
+                }
+            </>
+        )
+    } else {
+        return (
+            <h4>Essa trilha não tem nenhuma atividade no momento</h4>
+        )
+    }
+}
 
-
-export {AtividadesListagemAluno}
+export { AtividadesListagemAluno }

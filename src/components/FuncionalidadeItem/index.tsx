@@ -39,6 +39,8 @@ const DivItemFuncionalidade = styled.div`
     @media(max-width: 580px) {
 
         flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
 
         img {
             margin-left: 5px;

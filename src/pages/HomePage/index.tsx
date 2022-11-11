@@ -8,10 +8,7 @@ const ConteudoHome = styled.div`
     margin: 1em 3em;
     display: flex;
     flex-wrap: wrap;
-
-    @media(max-width: 570px) {
-       justify-content: center;
-    }
+    justify-content: center;
 `
 
 function HomePage() {
