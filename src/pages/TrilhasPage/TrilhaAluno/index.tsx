@@ -8,6 +8,12 @@ import { recuperarParaAluno } from '../../../services/Trilha.service';
 import HeaderPagina from '../../../components/HeaderPagina';
 import { AtividadesListagemAluno } from '../../../components/AtividadesListagem/AtividadesListagemAluno';
 import { Progress } from 'reactstrap';
+import { ordenarAtividades } from '../../../utils/atividadesUtils';
+
+declare interface PropsBarraTrilha {
+    trilha: TrilhaAlunoRequest;
+    pctgTrilhaConc: number;
+}
 
 function TrilhaAluno() {
 
@@ -35,6 +41,7 @@ function TrilhaAluno() {
             .then(response => {
                 carregandoRef.close()
                 var newTrilha = response.data as TrilhaAlunoRequest
+                newTrilha = ordenarAtividades(newTrilha)
                 setTrilha(newTrilha)
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados da sua trilha!').fire()
@@ -43,8 +50,8 @@ function TrilhaAluno() {
 
     var pctgTrilhaConc: number = calcularPctgConcTrilha();
 
-    function calcularPctgConcTrilha(){
-        let result =  Math.trunc(trilha.quantConcluido * 100 / trilha.quantAtividade);
+    function calcularPctgConcTrilha() {
+        let result = Math.trunc(trilha.quantConcluido * 100 / trilha.quantAtividade);
         return result;
     }
 
@@ -65,7 +72,7 @@ function TrilhaAluno() {
                         <b>descrição: </b>{trilha.descricao}
                     </div>
                 </div>
-                    { BarraPrograssoTrilha(trilha) }
+                <BarraProgressoTrilha trilha={trilha} pctgTrilhaConc={pctgTrilhaConc} />
                 <div className='atividades-aluno-pai'>
                     <AtividadesListagemAluno atividadesParam={trilha.atividadesTrilhaDTOs}></AtividadesListagemAluno>
                 </div>
@@ -73,38 +80,36 @@ function TrilhaAluno() {
         </>
     )
 
-    function BarraPrograssoTrilha(trilha:TrilhaAlunoRequest){
-        if(trilha === undefined || trilha.atividadesTrilhaDTOs === undefined || trilha.atividadesTrilhaDTOs.length <= 0){
-            return (
-                <div className="barra-progresso-pai">
-                    <p>{pctgTrilhaConc}% da Trilha foi concluída. {getMensagemPorcentagemTrilha(pctgTrilhaConc)}</p>
-                    <Progress animated color="success" value={pctgTrilhaConc} />
-                </div>
-            )
-        } 
+}
+
+function BarraProgressoTrilha({ trilha, pctgTrilhaConc }: PropsBarraTrilha) {
+    if (trilha === undefined || trilha.atividadesTrilhaDTOs === undefined || trilha.atividadesTrilhaDTOs.length === 0) {
         return (
             <></>
         )
     }
-
+    return (
+        <div className="barra-progresso-pai">
+            <p>{pctgTrilhaConc}% da Trilha foi concluída. {getMensagemPorcentagemTrilha(pctgTrilhaConc)}</p>
+            <Progress animated color="success" value={pctgTrilhaConc} />
+        </div>
+    )
 }
 
-
-
-function getMensagemPorcentagemTrilha(pctg:number){
-    if(pctg <= 25){
+function getMensagemPorcentagemTrilha(pctg: number) {
+    if (pctg <= 25) {
         return 'O começo de uma nova jornada!';
     }
-    if(pctg <= 50){
+    if (pctg <= 50) {
         return 'Muito bem, mas ainda há um caminho a frente!';
     }
-    if(pctg <= 75){
+    if (pctg <= 75) {
         return 'Mais da metade concluída, isso aí!';
     }
-    if(pctg <= 99){
+    if (pctg <= 99) {
         return 'Ânimo, você está quase lá!';
     }
-    if(pctg === 100){
+    if (pctg === 100) {
         return 'Parabéns!';
     }
 }

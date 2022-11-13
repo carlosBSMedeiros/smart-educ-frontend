@@ -2,7 +2,9 @@ import './style.css'
 import { Atividade, AtividadeAluno } from '../../types/atividade'
 import { TipoAtividade } from '../../types/atividade'
 import { getTipoAtividadeCompleto } from '../../utils/tiposAtividades'
-import { useAutenticacaoContext } from '../../context/AutenticacaoContext'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { useState } from 'react';
+import AtividadeForm from "../Atividade"
 
 declare interface Props {
     atividade: Atividade
@@ -18,10 +20,12 @@ export function CardAtividade({ atividade }: Props) {
 
 export function CardAtividadeAluno({atividade}:PropsAluno){
 
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+
     var tipoAtv: TipoAtividade = getTipoAtividadeCompleto(atividade.tipoAtividade)
 
-    function ativConcluidaOuNao(concluida:string){
-        if(concluida==="true"){
+    function ativConcluidaOuNao(concluida:boolean){
+        if(concluida){
             return(
                 <b className='label-ativ-conc'>Concluída!</b> 
             )
@@ -31,19 +35,41 @@ export function CardAtividadeAluno({atividade}:PropsAluno){
         )
     }
 
+    function toggleModal() {
+        setModalOpen(!modalOpen)
+    }
+
+    function ModalAtividadeAluno(){
+        return (
+            <Modal isOpen={modalOpen} toggle={toggleModal} size="lg">
+                <ModalHeader toggle={toggleModal}>{tipoAtv.nome}</ModalHeader>
+                <ModalBody>
+                    <AtividadeForm atividade={atividade}></AtividadeForm>
+                </ModalBody>
+            </Modal>
+        )
+    }
+
     return (
-        <div className={`card-atividade aluno ${atividade.concluida === "true" ? 'conc' : 'nao-conc'}`}>
-            <div className='card-atividade-desabilitada'>
+        <>
+            <div className={`card-atividade aluno 
+                ${atividade.concluida ? 'conc' : 'nao-conc'}
+                ${atividade.ordem === 1 ? 'forcar-habilitada' : ''}` }   
+                onClick={toggleModal}
+            >
+                <div className='card-atividade-desabilitada'>
+                </div>
+                <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
+                    {tipoAtv.nome}
+                </div>
+                <div className="card-atividade-body">
+                    {atividade.titulo}
+                    <br />
+                    {ativConcluidaOuNao(atividade.concluida)}
+                </div>
             </div>
-            <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
-                {tipoAtv.nome}
-            </div>
-            <div className="card-atividade-body">
-                {atividade.titulo}
-                <br />
-                {ativConcluidaOuNao(atividade.concluida)}
-            </div>
-        </div>
+            <ModalAtividadeAluno></ModalAtividadeAluno>
+        </>
     )
 }
 

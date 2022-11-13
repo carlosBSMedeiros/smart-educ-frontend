@@ -4,8 +4,8 @@
     flex-direction: column;
     height: 150px;
     width: 200px;
+    min-width: 200px;
     background-color: var(--color-4);
-    border: 1px solid var(--color-1);
     border-radius: 10px;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
     transition: all .3s ease-in-out 0s;
@@ -16,8 +16,8 @@
     position: absolute;
     background-color: #3a37376c;
     z-index: 3;
-    height: 150px;
-    width: 200px;
+    height: 100%;
+    width: 100%;
     border-radius: 10px;
 }
 
@@ -36,10 +36,21 @@
     display: none !important;
 }
 
+/* para trilhas sem nenhuma atividade concluída */
+.card-atividade.aluno.nao-conc.forcar-habilitada + .card-atividade-ligacao + .card-atividade.aluno.nao-conc .card-atividade-desabilitada{
+    display: block ;
+}
+
+.card-atividade.aluno.nao-conc.forcar-habilitada .card-atividade-desabilitada{
+    display: none !important;
+}
+
 .card-atividade-header{
     background-color: var(--color-1);
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px 8px 0 0;
     border-color: var(--color-1);
+    border: 1px solid var(--color-1);
+    border-bottom: 0px;
     box-sizing: border-box;
     color: white;
     font: 700;
@@ -60,11 +71,16 @@
 }
 
 .card-atividade-body{
+    height: 100%;
     padding: 0.5rem;
     font-size: 14px;
+    border: 1px solid var(--color-1);
+    border-top: 0px;
+    border-radius:0 0 8px 8px;
 }
 
 .card-atividade-ligacao{
+    min-width: 50px;
     width: 100px;
     min-height: 1rem;
     background-color: var(--color-3);

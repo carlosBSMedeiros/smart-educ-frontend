@@ -13,6 +13,9 @@ export function getTipoAtividadeCompleto(abrev:string){
     } else if (abrev.toUpperCase() === 'TRILHA'){
         infos.nome = 'Trilha'
         infos.descricao = 'Trilha de aprendizado com outras atividades'
+    } else if (abrev.toUpperCase() === 'JOGO'){
+        infos.nome = 'Jogo'
+        infos.descricao = 'atividade em formato de jogo'
     } 
      
     return infos

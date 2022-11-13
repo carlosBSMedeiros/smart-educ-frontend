@@ -13,11 +13,11 @@ import CardAlternativa from '../CardAlternativa';
 import { RespostaQuest } from '../../types/RespostaQuest';
 
 interface Props {
-    idBancoQuestao:string
-    idAtividade:string
-  }
+    idBancoQuestao: string
+    idAtividade: string
+}
 
-function Questionario({ idBancoQuestao, idAtividade}: Props) {
+function Questionario({ idBancoQuestao, idAtividade }: Props) {
 
     var autenticador = useAutenticacaoContext();
     var navegacao = useNavigate();
@@ -26,9 +26,9 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
 
     const [respostas, setRespostas] = useState<RespostaQuest[]>([]);
     const [respostaStep, setRespostaStep] = useState<RespostaQuest>({
-        idQuestao:999,
-        respostaAluno : 999,
-        respostaCorreta:999
+        idQuestao: 999,
+        respostaAluno: 999,
+        respostaCorreta: 999
     });
 
     const [check, setCheck] = useState<string>("");
@@ -53,11 +53,11 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
     }, [bancoQuestao]);
 
     useEffect(() => { // esse é responsável em pegar as alterações
-       let tempRespostas:RespostaQuest[] = respostas.filter(e =>{
+        let tempRespostas: RespostaQuest[] = respostas.filter(e => {
             return e.idQuestao !== respostaStep.idQuestao
         });
 
-        if(respostaStep.idQuestao!==999)
+        if (respostaStep.idQuestao !== 999)
             setRespostas([...tempRespostas, respostaStep])
 
 
@@ -66,12 +66,12 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
     }, [respostaStep]);
 
     useEffect(() => { // esse é responsável em pegar as alterações
-        let temps:RespostaQuest[] = respostas.filter(e => {
+        let temps: RespostaQuest[] = respostas.filter(e => {
             return e.idQuestao === steps[currentStep].id
         })
 
-        if(temps.length>0)
-            setRespostaStep({...temps[0]})
+        if (temps.length > 0)
+            setRespostaStep({ ...temps[0] })
     }, [currentStep]);
 
     const carregar = async () => {
@@ -88,14 +88,14 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
             })
     }
 
-    const handlerChange = (questao:number, resp:number) => {
-        
+    const handlerChange = (questao: number, resp: number) => {
+
         respostaStep.idQuestao = steps[currentStep].id
         respostaStep.respostaCorreta = steps[currentStep].respostaCorreta
         respostaStep.respostaAluno = resp
 
-        setRespostaStep({...respostaStep})
-        
+        setRespostaStep({ ...respostaStep })
+
     }
 
     function handleNext() {
@@ -111,15 +111,15 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
 
     const limpaState = () => {
         setRespostaStep({
-            idQuestao:999,
-            respostaAluno : 999,
-            respostaCorreta:999
+            idQuestao: 999,
+            respostaAluno: 999,
+            respostaCorreta: 999
         });
     }
 
     async function handleFinalizar() {
         carregando.fire();
-        concluirQuest(respostas,idAtividade,autenticador.usuario.idUsuario)
+        concluirQuest(respostas, idAtividade, autenticador.usuario.idUsuario)
             .then(response => {
                 carregando.close();
                 navegacao("/trilhas")
@@ -128,7 +128,7 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema ao concluir a atividade!').fire()
             })
-        
+
     }
 
     return (
@@ -161,10 +161,10 @@ function Questionario({ idBancoQuestao, idAtividade}: Props) {
                                 <div className="botoes">
                                     {currentStep !== 0 && (
                                         <button className="button btn-cor-5" type="button" onClick={handlePrev}>
-                                        Anterior
-                                    </button>
+                                            Anterior
+                                        </button>
                                     )}
-                                    
+
                                     <button className="button btn-cor-5" type="button" onClick={handleNext}>
                                         Próximo
                                     </button>

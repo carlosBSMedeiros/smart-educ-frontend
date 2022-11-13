@@ -24,5 +24,5 @@ export type AtividadeAluno = {
     enunciado:string,
     tipoAtividade:string,
     conteudoTexto:string,
-    concluida:string
+    concluida:boolean
 }
