@@ -6,6 +6,23 @@ export function recuperarAtividadesIdTrilha(idTrilha:string){
     return http.get(`/atividade/trilha/${idTrilha}`)
 }
 
+export function getById(id:string){
+    return http.get(`/atividade/${id}`)
+}
+
+
+export function concluirJogo(idAtividade:string, idAluno:string,){
+    let concluida:AtividadeConcluida = {
+        id: "",
+        idTrilha:"",
+        idAtividade:idAtividade,
+        idAluno:idAluno,
+        pontos:10
+    };
+    
+    return http.post('/atividade/concluir', concluida)
+}
+
 export function concluirQuest(respostaQuests:RespostaQuest[], idAtividade:string, idAluno:string,){
     let concluida:AtividadeConcluida = {
         id: "",
