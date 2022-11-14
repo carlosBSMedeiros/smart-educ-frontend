@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react"
-import { Atividade } from '../../types/atividade';
-import { getById, concluirJogo } from '../../services/Atividade.service';
-import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../Alerts/index";
-import { useAutenticacaoContext } from "../../context/AutenticacaoContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Atividade } from '../../../../types/atividade';
+import { getById, concluirJogo } from '../../../../services/Atividade.service';
+import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../Alerts/index";
+import { useAutenticacaoContext } from "../../../../context/AutenticacaoContext";
+import { ConcluirAtividadeButton, ConcluirAtividadeStyled } from "../../styledComponentes";
 
 declare interface Props {
-    idAtividade: string
+    idAtividade: string,
+    funcaoFinalizarJogo: Function
 }
 
-
-function WordWall({ idAtividade }: Props) {
+function WordWall({ idAtividade, funcaoFinalizarJogo }: Props) {
 
     var autenticador = useAutenticacaoContext();
-    var navegacao = useNavigate();
 
     const [atividade, setAtividade] = useState<Atividade>({
         id: "",
@@ -34,13 +33,11 @@ function WordWall({ idAtividade }: Props) {
         concluirJogo(idAtividade, autenticador.usuario.idUsuario)
             .then(response => {
                 carregando.close();
-                navegacao("/trilhas")
-                toastrSucessoBuilder.build('sucesso!').fire()
-
+                toastrSucessoBuilder.build('Jogo concluído com sucesso!').fire()
+                funcaoFinalizarJogo();
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema ao concluir a atividade!').fire()
             })
-        
     }
 
     useEffect(() => {
@@ -57,11 +54,11 @@ function WordWall({ idAtividade }: Props) {
     return (
         <div className="wordwall">
             <div  dangerouslySetInnerHTML={{ __html: atividade.iframe }} />
-            <div>
-                <button className="button btn submit btn-danger" type="button" onClick={handleFinalizar}> 
-                    Finalizar
-                </button>
-            </div>
+            <ConcluirAtividadeStyled>
+                <ConcluirAtividadeButton onClick={handleFinalizar}>
+                    Concluir Atividade
+                </ConcluirAtividadeButton>
+            </ConcluirAtividadeStyled>
         </div>
     );
 
