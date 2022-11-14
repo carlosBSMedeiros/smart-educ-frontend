@@ -35,6 +35,18 @@ export function concluirQuest(respostaQuests:RespostaQuest[], idAtividade:string
     return http.post('/atividade/concluir', concluida)
 }
 
+export function concluirTexto(idAtividade:string, idAluno:string,){
+    let concluida:AtividadeConcluida = {
+        id: "",
+        idTrilha: "",
+        idAtividade: idAtividade,
+        idAluno: idAluno,
+        pontos: 20
+    };
+    
+    return http.post('/atividade/concluir', concluida)
+}
+
 const calculatePontos =  (respostaQuests:RespostaQuest[]) =>{
     let pontos = 0;
     respostaQuests.forEach(e => {

@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react"
-import HeaderPagina from "../../components/HeaderPagina"
 import './style.css'
 import { useNavigate, useParams } from "react-router-dom";
 import { useAutenticacaoContext } from "../../context/AutenticacaoContext";
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../components/Alerts";
-
 import { recuperarPorId } from "../../services/BancoQuestao.service"
 import { concluirQuest } from "../../services/Atividade.service"
 import { BancoQuestao } from '../../types/bancoQuestao';
 import { Questao } from "../../types/Questao"
 import CardAlternativa from '../CardAlternativa';
 import { RespostaQuest } from '../../types/RespostaQuest';
+import Swal from "sweetalert2";
 
 interface Props {
     idBancoQuestao: string
     idAtividade: string
+    finalizarAtividadeQuest: Function
 }
 
-function Questionario({ idBancoQuestao, idAtividade }: Props) {
+function Questionario({ idBancoQuestao, idAtividade, finalizarAtividadeQuest}: Props) {
 
     var autenticador = useAutenticacaoContext();
     var navegacao = useNavigate();
@@ -81,8 +81,6 @@ function Questionario({ idBancoQuestao, idAtividade }: Props) {
             .then(response => {
                 carregandoObj.close()
                 setBancoQuestao(response.data as BancoQuestao)
-
-
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados!').fire()
             })
@@ -122,19 +120,32 @@ function Questionario({ idBancoQuestao, idAtividade }: Props) {
         concluirQuest(respostas, idAtividade, autenticador.usuario.idUsuario)
             .then(response => {
                 carregando.close();
-                navegacao("/trilhas")
-                toastrSucessoBuilder.build('sucesso!').fire()
-
+                toastrSucessoBuilder.build('Questionário respondido com sucesso!').fire()
+                finalizarAtividadeQuest()
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema ao concluir a atividade!').fire()
             })
+    }
 
+    function exibirModalConfirmacaoQuest(){
+        Swal.fire({
+            icon: 'question',
+            title: 'Tem certeza?',
+            text: 'Você está prestes a finalizar o questionário, tem certeza que deseja continuar?',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Enviar!',
+            cancelButtonText: 'Revisar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                handleFinalizar();
+            }
+          })
     }
 
     return (
         <div className="App">
-            <HeaderPagina titulo="Questionário" />
-
             {steps.length > 0 && (
                 <div className="">
                     <p className="step-guide">
@@ -146,26 +157,20 @@ function Questionario({ idBancoQuestao, idAtividade }: Props) {
                             <p className="anunciado">{steps[currentStep].enunciado}</p>
                             {steps[currentStep].id >= 0 && (
                                 <div className="fields">
-
                                     {
                                         steps[currentStep].alternativas.map((e, key) => {
                                             return <CardAlternativa alternativa={e} check={check} numero={key} key={key} idQuestao={steps[currentStep].id} handler={handlerChange}></CardAlternativa>
                                         })
                                     }
-
                                 </div>
                             )}
 
-
                             {currentStep < steps.length - 1 && (
                                 <div className="botoes">
-                                    {currentStep !== 0 && (
-                                        <button className="button btn-cor-5" type="button" onClick={handlePrev}>
-                                            Anterior
-                                        </button>
-                                    )}
-
-                                    <button className="button btn-cor-5" type="button" onClick={handleNext}>
+                                    <button className={`btn btn-cor-5 ${currentStep === 0 ? 'disabled' : ''}`} type="button" onClick={handlePrev}>
+                                        Anterior
+                                    </button>
+                                    <button className="btn btn-cor-5" type="button" onClick={handleNext}>
                                         Próximo
                                     </button>
                                 </div>
@@ -173,10 +178,10 @@ function Questionario({ idBancoQuestao, idAtividade }: Props) {
 
                             {currentStep === steps.length - 1 && (
                                 <div className="botoes">
-                                    <button className="button btn-cor-5" type="button" onClick={handlePrev}>
+                                    <button className="btn btn-cor-5" type="button" onClick={handlePrev}>
                                         Anterior
                                     </button>
-                                    <button className="button btn submit btn-danger" type="button" onClick={handleFinalizar}>
+                                    <button className="btn submit btn-success" type="button" onClick={exibirModalConfirmacaoQuest}>
                                         Finalizar
                                     </button>
                                 </div>

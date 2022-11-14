@@ -3,10 +3,11 @@ import { AtividadeAluno } from '../../../types/atividade'
 import { CardAtividadeAluno, CardAtividadeLigacao } from "../../CardAtividade";
 
 declare interface Props {
-    atividadesParam: AtividadeAluno[]
+    atividadesParam: AtividadeAluno[],
+    atualizarAtividades: Function
 }
 
-var AtividadesListagemAluno = function ({ atividadesParam }: Props) {
+var AtividadesListagemAluno = function ({ atividadesParam, atualizarAtividades }: Props) {
 
     var atividades: AtividadeAluno[] = (!atividadesParam || atividadesParam === undefined) ? [] : atividadesParam
     console.log('AtividadesListagemAluno: ', atividades)
@@ -15,14 +16,14 @@ var AtividadesListagemAluno = function ({ atividadesParam }: Props) {
         <>
             <div className="container-atividades aluno">
                 {
-                    AtividadesListagemContainerInterno(atividades)
+                    AtividadesListagemContainerInterno(atividades,atualizarAtividades)
                 }
             </div>
         </>
     )
 }
 
-function AtividadesListagemContainerInterno(atividades: AtividadeAluno[]) {
+function AtividadesListagemContainerInterno(atividades: AtividadeAluno[], atualizarAtividades:Function) {
 
     if (atividades.length > 0) {
         return (
@@ -32,13 +33,13 @@ function AtividadesListagemContainerInterno(atividades: AtividadeAluno[]) {
                         if (i < atividades.length - 1) {
                             return (
                                 <>
-                                    <CardAtividadeAluno key={atv.id} atividade={atv} />
+                                    <CardAtividadeAluno key={atv.id} atividade={atv} atualizarAtividades={atualizarAtividades}/>
                                     <CardAtividadeLigacao key={atv.id + "ligac"} />
                                 </>
                             )
                         }
                         return (
-                            <CardAtividadeAluno key={atv.id} atividade={atv} />
+                            <CardAtividadeAluno key={atv.id} atividade={atv} atualizarAtividades={atualizarAtividades} />
                         )
                     })
                 }

@@ -11,14 +11,15 @@ declare interface Props {
 }
 
 declare interface PropsAluno{
-    atividade: AtividadeAluno
+    atividade: AtividadeAluno,
+    atualizarAtividades: Function
 }
 
 export function CardAtividade({ atividade }: Props) {
     return CardAtividadeProf(atividade,getTipoAtividadeCompleto(atividade.tipoAtividade))
 }
 
-export function CardAtividadeAluno({atividade}:PropsAluno){
+export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
 
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
@@ -41,13 +42,18 @@ export function CardAtividadeAluno({atividade}:PropsAluno){
 
     function ModalAtividadeAluno(){
         return (
-            <Modal isOpen={modalOpen} toggle={toggleModal} size="lg">
+            <Modal isOpen={modalOpen} toggle={toggleModal} size="xl">
                 <ModalHeader toggle={toggleModal}>{tipoAtv.nome}</ModalHeader>
                 <ModalBody>
-                    <AtividadeForm atividade={atividade}></AtividadeForm>
+                    <AtividadeForm atividade={atividade} fecharModalAtualizarListaAtividades={fecharModalAtualizarListaAtividades}></AtividadeForm>
                 </ModalBody>
             </Modal>
         )
+    }
+    
+    var fecharModalAtualizarListaAtividades = function(){
+        toggleModal();
+        atualizarAtividades();
     }
 
     return (

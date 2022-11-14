@@ -1,6 +1,5 @@
 import styled from "styled-components"
 
-
 export const TituloAtividadeStyled = styled.div`
     text-align: center;
 `
@@ -22,7 +21,8 @@ export const AtividadeConcluidaStyled = styled.div`
 `
 
 export const ConcluirAtividadeButton = styled.button`
-    background-color: var(--color-2);
+    background-color: #28a745;
+    border-color: #28a745;
     color: #ffffff;
     font-weight: 400;
     line-height: 1.5;
@@ -38,7 +38,8 @@ export const ConcluirAtividadeButton = styled.button`
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
     &:hover{
-        background-color: var(--color-1);
+        background-color: #218838;
+        border-color: #1e7e34;
         cursor: pointer;
     }
 `

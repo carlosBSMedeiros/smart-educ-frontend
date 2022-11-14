@@ -4,17 +4,17 @@ import { TituloAtividadeStyled } from "../styledComponentes"
 import Wordwall from "../../Wordwall";
 
 declare interface Props{
-    atividade:AtividadeAluno
+    atividade:AtividadeAluno,
+    fecharModalAtualizarListaAtividades: Function
 }
 
-function AtividadeFormTipoJogo({atividade}: Props){
+function AtividadeFormTipoJogo({atividade,fecharModalAtualizarListaAtividades}: Props){
     return (
         <div>
             <TituloAtividadeStyled>
                 <h3>{atividade.enunciado}</h3>
                 <Wordwall idAtividade={atividade.id}></Wordwall>
             </TituloAtividadeStyled>
-            
         </div>
     )
 }

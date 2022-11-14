@@ -35,6 +35,11 @@ function TrilhaAluno() {
         if (!trilha.id || trilha.id.trim() === "") {
             return;
         }
+        recuperarTrilha(trilha.id);
+       
+    }, [])
+
+    function recuperarTrilha(idTrilha:string){
         var carregandoRef = carregando
         carregandoRef.fire()
         recuperarParaAluno(trilha.id, autenticador.usuario.idUsuario)
@@ -46,7 +51,7 @@ function TrilhaAluno() {
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados da sua trilha!').fire()
             })
-    }, [])
+    }
 
     var pctgTrilhaConc: number = calcularPctgConcTrilha();
 
@@ -74,7 +79,10 @@ function TrilhaAluno() {
                 </div>
                 <BarraProgressoTrilha trilha={trilha} pctgTrilhaConc={pctgTrilhaConc} />
                 <div className='atividades-aluno-pai'>
-                    <AtividadesListagemAluno atividadesParam={trilha.atividadesTrilhaDTOs}></AtividadesListagemAluno>
+                    <AtividadesListagemAluno 
+                        atividadesParam={trilha.atividadesTrilhaDTOs}
+                        atualizarAtividades={recuperarTrilha}
+                    ></AtividadesListagemAluno>
                 </div>
             </div>
         </>
