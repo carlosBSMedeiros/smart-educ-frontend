@@ -1,10 +1,12 @@
 import './style.css'
-import { Atividade, AtividadeAluno } from '../../types/atividade'
+import { Atividade } from '../../types/atividade'
 import { TipoAtividade } from '../../types/atividade'
 import { getTipoAtividadeCompleto } from '../../utils/tiposAtividades'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useState } from 'react';
 import AtividadeForm from "../Atividade"
+import { AtividadeAluno } from '../../types/TrilhaAlunoRequestNew'
+import { erroGenericoBuilder } from '../Alerts';
 
 declare interface Props {
     atividade: Atividade
@@ -56,12 +58,20 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
         atualizarAtividades();
     }
 
+    function verificarPermissaoExecucaoAtividade(){
+        if(atividade.getAnterior || atividade.ordem === 1){
+            toggleModal();
+        } else{
+            erroGenericoBuilder.buildStr("Você deve concluir a atividade anterior para realizar essa atividade!").fire();
+        }
+    }
+
     return (
         <>
             <div className={`card-atividade aluno 
                 ${atividade.concluida ? 'conc' : 'nao-conc'}
                 ${atividade.ordem === 1 ? 'forcar-habilitada' : ''}` }   
-                onClick={toggleModal}
+                onClick={verificarPermissaoExecucaoAtividade}
             >
                 <div className='card-atividade-desabilitada'>
                 </div>

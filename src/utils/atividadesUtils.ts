@@ -1,20 +1,18 @@
 import { AtividadeAluno } from "../types/atividade";
-import { TrilhaAlunoRequest } from "../types/trilha";
 
-function ordenarAtividades(trilhaAluno: TrilhaAlunoRequest){
-    var atividades = trilhaAluno.atividadesTrilhaDTOs
-    trilhaAluno.atividadesTrilhaDTOs = atividades.sort(compareFn)
-    return trilhaAluno
+function ordenarAtividades(atividades: any) {
+  atividades.sort(compareFnRaw)
 }
 
-function compareFn(a:AtividadeAluno, b:AtividadeAluno) {
-    if (a.ordem < b.ordem) {
-      return -1;
-    }
-    if (a.ordem > b.ordem) {
-      return 1;
-    }
-    return 0;
+function compareFnRaw(a: AtividadeAluno, b: AtividadeAluno) {
+  if (a.ordem < b.ordem) {
+    return -1;
   }
+  if (a.ordem > b.ordem) {
+    return 1;
+  }
+  return 0;
+}
 
-export {ordenarAtividades}
+
+export { ordenarAtividades }

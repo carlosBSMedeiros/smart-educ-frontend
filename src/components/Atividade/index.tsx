@@ -3,6 +3,7 @@ import AtividadeFormTipoTexto from "./AtividadeTexto";
 import AtividadeFormTipoQuest from "./AtividadeQuestionario"
 import AtividadeFormTipoJogo from "./AtividadeJogo"
 import AtividadeFormTipoTrilha from "./AtividadeTrilha"
+import Swal from "sweetalert2";
 
 declare interface Props{
     atividade:AtividadeAluno,
@@ -10,7 +11,7 @@ declare interface Props{
 }
 
 function AtividadeForm({atividade, fecharModalAtualizarListaAtividades}:Props){
-
+    
     var abrv = atividade.tipoAtividade.toUpperCase()
     switch(abrv){
         case 'TEXTO':
@@ -23,9 +24,7 @@ function AtividadeForm({atividade, fecharModalAtualizarListaAtividades}:Props){
             return <AtividadeFormTipoJogo atividade={atividade} fecharModalAtualizarListaAtividades={fecharModalAtualizarListaAtividades}/>;
         default:
             return <AtividadeFormTipoErro atividade={atividade} fecharModalAtualizarListaAtividades={fecharModalAtualizarListaAtividades}/>;
-    }
-
-    
+    }    
 }
 
 function AtividadeFormTipoErro({atividade}:Props){

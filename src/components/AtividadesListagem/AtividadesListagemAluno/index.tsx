@@ -1,6 +1,6 @@
 import '../style.css'
-import { AtividadeAluno } from '../../../types/atividade'
 import { CardAtividadeAluno, CardAtividadeLigacao } from "../../CardAtividade";
+import { AtividadeAluno } from '../../../types/TrilhaAlunoRequestNew';
 
 declare interface Props {
     atividadesParam: AtividadeAluno[],

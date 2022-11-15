@@ -1,17 +1,17 @@
 import './style.css'
 import { useState, useEffect } from "react"
 import { useAutenticacaoContext } from '../../../context/AutenticacaoContext';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TrilhaAlunoRequest } from '../../../types/trilha';
+import { useParams } from 'react-router-dom';
 import { carregando, erroGenericoBuilder } from '../../../components/Alerts';
 import { recuperarParaAluno } from '../../../services/Trilha.service';
 import HeaderPagina from '../../../components/HeaderPagina';
 import { AtividadesListagemAluno } from '../../../components/AtividadesListagem/AtividadesListagemAluno';
 import { Progress } from 'reactstrap';
 import { ordenarAtividades } from '../../../utils/atividadesUtils';
+import { AtividadeAluno, TrilhaAluno as TrilhaAlunoReq} from '../../../types/TrilhaAlunoRequestNew';
 
 declare interface PropsBarraTrilha {
-    trilha: TrilhaAlunoRequest;
+    trilha: TrilhaAlunoReq;
     pctgTrilhaConc: number;
 }
 
@@ -20,7 +20,7 @@ function TrilhaAluno() {
     var autenticador = useAutenticacaoContext();
     let { id } = useParams();
 
-    const [trilha, setTrilha] = useState<TrilhaAlunoRequest>({
+    const [trilha, setTrilha] = useState<TrilhaAlunoReq>({
         id: id ? id : "",
         titulo: "",
         descricao: "",
@@ -36,17 +36,16 @@ function TrilhaAluno() {
             return;
         }
         recuperarTrilha(trilha.id);
-       
+
     }, [])
 
-    function recuperarTrilha(idTrilha:string){
+    function recuperarTrilha(idTrilha: string) {
         var carregandoRef = carregando
         carregandoRef.fire()
         recuperarParaAluno(trilha.id, autenticador.usuario.idUsuario)
             .then(response => {
                 carregandoRef.close()
-                var newTrilha = response.data as TrilhaAlunoRequest
-                newTrilha = ordenarAtividades(newTrilha)
+                var newTrilha = criarTrilhaAlunoRequest(response.data)
                 setTrilha(newTrilha)
             }).catch(error => {
                 erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados da sua trilha!').fire()
@@ -54,6 +53,38 @@ function TrilhaAluno() {
     }
 
     var pctgTrilhaConc: number = calcularPctgConcTrilha();
+
+    function criarTrilhaAlunoRequest(data: any) {
+
+        var trilhaNew = new TrilhaAlunoReq(data);
+        ordenarAtividades(data.atividadesTrilhaDTOs)
+
+        for (let index = 0; index < data.atividadesTrilhaDTOs.length; index++) {
+            var atividade;
+
+            var atividadeRaw = data.atividadesTrilhaDTOs[index];
+            var proximaAtividadeRaw;
+            var atividadeAnteriorRaw;
+            //ultima atividade da lista
+            if (index === data.atividadesTrilhaDTOs.length - 1) {
+                atividadeAnteriorRaw = data.atividadesTrilhaDTOs[index - 1];
+                atividade = new AtividadeAluno(atividadeRaw, false, atividadeAnteriorRaw.concluida);
+                trilhaNew.atividadesTrilhaDTOs.push(atividade)
+            }else if (index === 0) {
+                proximaAtividadeRaw = data.atividadesTrilhaDTOs[index + 1];
+                atividade = new AtividadeAluno(atividadeRaw, proximaAtividadeRaw.concluida, false);
+                trilhaNew.atividadesTrilhaDTOs.push(atividade)
+            }else{
+                atividadeAnteriorRaw = data.atividadesTrilhaDTOs[index - 1];
+                proximaAtividadeRaw = data.atividadesTrilhaDTOs[index + 1];
+                atividade = new AtividadeAluno(atividadeRaw, proximaAtividadeRaw.concluida, atividadeAnteriorRaw.concluida);
+                trilhaNew.atividadesTrilhaDTOs.push(atividade)
+            }
+        }
+
+        console.log(trilhaNew)
+        return trilhaNew
+    }
 
     function calcularPctgConcTrilha() {
         let result = Math.trunc(trilha.quantConcluido * 100 / trilha.quantAtividade);
@@ -79,7 +110,7 @@ function TrilhaAluno() {
                 </div>
                 <BarraProgressoTrilha trilha={trilha} pctgTrilhaConc={pctgTrilhaConc} />
                 <div className='atividades-aluno-pai'>
-                    <AtividadesListagemAluno 
+                    <AtividadesListagemAluno
                         atividadesParam={trilha.atividadesTrilhaDTOs}
                         atualizarAtividades={recuperarTrilha}
                     ></AtividadesListagemAluno>
