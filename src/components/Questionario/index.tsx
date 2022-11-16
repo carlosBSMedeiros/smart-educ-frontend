@@ -99,16 +99,13 @@ function Questionario({ idBancoQuestao, idAtividade, finalizarAtividadeQuest}: P
 
     function handleNext() {
         setCurrentStep((prevState) => prevState + 1);
-        limpaState();
-        console.log(respostaStep);
-        
+        limpaState();    
         setCheck("")
     }
 
     function handlePrev() {
         setCurrentStep((prevState) => prevState - 1);
         limpaState();
-        console.log(respostaStep);
     }
 
     const limpaState = () => {
