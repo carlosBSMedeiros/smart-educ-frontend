@@ -66,6 +66,7 @@ function Questionario({ idBancoQuestao, idAtividade, finalizarAtividadeQuest}: P
     }, [respostaStep]);
 
     useEffect(() => { // esse é responsável em pegar as alterações
+        limpaState();
         let temps: RespostaQuest[] = respostas.filter(e => {
             return e.idQuestao === steps[currentStep].id
         })
@@ -99,12 +100,15 @@ function Questionario({ idBancoQuestao, idAtividade, finalizarAtividadeQuest}: P
     function handleNext() {
         setCurrentStep((prevState) => prevState + 1);
         limpaState();
+        console.log(respostaStep);
+        
         setCheck("")
     }
 
     function handlePrev() {
         setCurrentStep((prevState) => prevState - 1);
         limpaState();
+        console.log(respostaStep);
     }
 
     const limpaState = () => {

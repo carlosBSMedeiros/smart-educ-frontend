@@ -35,6 +35,10 @@ function BancoQuestoesForm({ isNovo }: Props) {
   const [editando, setEditando] = useState(false);
 
   const toggle = () => {
+    if(modal){
+      LimpQuestao();
+    }
+    
     setModal(!modal);
   }
   const [questao, setQuestao] = useState<Questao>({ id: 999, 
@@ -100,7 +104,6 @@ function BancoQuestoesForm({ isNovo }: Props) {
         break;
     }
     setQuestao({ ...questao, [name]: valor })
-    console.log(questao);
     
   }
 
@@ -113,6 +116,7 @@ function BancoQuestoesForm({ isNovo }: Props) {
   }
 
   const addTask = (): void => {
+
     if(!editando){
       questao.id = questao.id = Math.floor(Math.random() * 1000);
       setQuestoes([...questoes, questao]);
@@ -142,11 +146,17 @@ function BancoQuestoesForm({ isNovo }: Props) {
   }
 
   const closeModal = () => {
+    setEditando(false);
     LimpQuestao();
     toggle();
   }
 
   useEffect(() => { // esse é responsável em pegar as alterações
+    bancoQuestao.questoes.forEach(e=>{
+      if(e.id === null){
+        e.id = Math.floor(Math.random() * 1000);
+      }
+    })
     setQuestoes(bancoQuestao.questoes)
 }, [bancoQuestao]);
 
