@@ -1,7 +1,7 @@
 import axios from "axios"; 
 import { getToken } from "../services/Autenticacao.service";
-// export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
-export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "https://tcc-api-prototipo.herokuapp.com";
+export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
+// export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "https://tcc-api-prototipo.herokuapp.com";
 
 
 const http = axios.create({
