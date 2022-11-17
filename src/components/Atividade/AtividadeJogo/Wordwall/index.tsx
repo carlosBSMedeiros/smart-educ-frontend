@@ -3,7 +3,7 @@ import { Atividade } from '../../../../types/atividade';
 import { getById, concluirJogo } from '../../../../services/Atividade.service';
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../Alerts/index";
 import { useAutenticacaoContext } from "../../../../context/AutenticacaoContext";
-import { ConcluirAtividadeButton, ConcluirAtividadeStyled } from "../../styledComponentes";
+import { AtividadeConcluidaStyled, ConcluirAtividadeButton, ConcluirAtividadeStyled } from "../../styledComponentes";
 
 declare interface Props {
     idAtividade: string,
@@ -51,14 +51,28 @@ function WordWall({ idAtividade, funcaoFinalizarJogo }: Props) {
 
     }, []);
 
+    function verificarAtividadeConcluida() {
+        if (atividade.concluida) {
+            return (
+                <AtividadeConcluidaStyled>
+                    Atividade já concluída! Parabéns!
+                </AtividadeConcluidaStyled>
+            )
+        } else {
+            return (
+                <ConcluirAtividadeStyled>
+                    <ConcluirAtividadeButton onClick={handleFinalizar}>
+                        Concluir Atividade
+                    </ConcluirAtividadeButton>
+                </ConcluirAtividadeStyled>
+            )
+        }
+    }
+
     return (
         <div className="wordwall">
-            <div  dangerouslySetInnerHTML={{ __html: atividade.iframe }} />
-            <ConcluirAtividadeStyled>
-                <ConcluirAtividadeButton onClick={handleFinalizar}>
-                    Concluir Atividade
-                </ConcluirAtividadeButton>
-            </ConcluirAtividadeStyled>
+            <div dangerouslySetInnerHTML={{ __html: atividade.iframe }} />
+            {verificarAtividadeConcluida()}
         </div>
     );
 
