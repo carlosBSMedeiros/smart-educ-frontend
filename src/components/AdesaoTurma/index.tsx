@@ -4,7 +4,7 @@ import { incluirAlunoTurma, recuperaTurmasIdAluno } from "../../services/AlunoTu
 import { getByCodigo } from "../../services/Turma.service"
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../Alerts";
 import { useAutenticacaoContext } from "../../context/AutenticacaoContext";
-import { useState } from "react"
+import { useState, useEffect } from 'react';
 import './style.css';
 import { Turma } from "../../types/turma";
 import Swal from "sweetalert2";
@@ -19,6 +19,8 @@ interface Props{
 function AdesaoTurma({handle, alunoTurmas}: Props) {
 
     
+
+    
     var autenticador = useAutenticacaoContext();
 
     const [codigo, setCodigo] = useState<string>("") 
@@ -31,6 +33,18 @@ function AdesaoTurma({handle, alunoTurmas}: Props) {
         idEscola:''
     })
 
+    useEffect(() => {
+        if(turma.id===""){
+            Swal.fire('Nenhuma Turma encontrada')
+        }else{
+            if(isExiste(turma)){
+                incAlunoTurma();
+            }else{
+                Swal.fire('Turma já vínculada!')
+            }
+        }
+    }, [turma])
+
     var handleInputChange = (e: React.ChangeEvent<HTMLInputElement>
         | React.ChangeEvent<HTMLTextAreaElement>
         | React.ChangeEvent<HTMLSelectElement>) => {
@@ -39,22 +53,13 @@ function AdesaoTurma({handle, alunoTurmas}: Props) {
         setCodigo(value)
     }
 
-    const aderir = (): void => {
+    const aderir = () => {
         carregando.fire()
         getByCodigo(codigo)
         .then(response => {
             setTurma(response.data as Turma)
             carregando.close()
-            if(turma.id===""){
-                Swal.fire('Nenhuma Turma encontrada')
-            }else{
-                if(isExiste(turma)){
-                    incAlunoTurma();
-                }else{
-                    Swal.fire('Turma já vínculada!')
-                }
-                
-            }
+            
         }).catch(error => {
             erroGenericoBuilder.buildStr('Ocorreu um problema para recuperar os dados !').fire()
         })
@@ -83,7 +88,6 @@ function AdesaoTurma({handle, alunoTurmas}: Props) {
 
         incluirAlunoTurma(alunoTurma)
         .then(response => {
-            setTurma(response.data as Turma)
             carregando.close()
             handle();
             toastrSucessoBuilder.build('operação realizada com sucesso!').fire()
