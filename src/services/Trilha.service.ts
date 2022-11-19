@@ -42,9 +42,6 @@ export function validarTrilha(trilha: TrilhaRequest){
     if(trilha.descricao.trim() === ''){
         erros.push('Descrição da trilha não pode ser Nula')
     }
-    if(trilha.ordem === 99 || trilha.ordem===null){
-        erros.push('ordem deve ser preenchido')
-    }
 
     let idMateriatrim = trilha.idMateria.trim()
     if(idMateriatrim === '99' || idMateriatrim === '' ){
