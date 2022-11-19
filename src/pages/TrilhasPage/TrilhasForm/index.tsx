@@ -10,6 +10,7 @@ import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../
 import { AtividadesListagemProf } from '../../../components/AtividadesListagem'
 import Swal from "sweetalert2";
 import pngAdd from '../../../assets/add-branco.png'
+import { useAutenticacaoContext } from "../../../context/AutenticacaoContext";
 
 declare interface Props {
     isNovo: boolean
@@ -17,6 +18,7 @@ declare interface Props {
 
 function TrilhasForm({ isNovo }: Props) {
 
+    const autenticacao = useAutenticacaoContext();
     var navegacao = useNavigate();
     let { id } = useParams();
 
@@ -26,7 +28,7 @@ function TrilhasForm({ isNovo }: Props) {
         descricao: "",
         ordem: null,
         idMateria: "",
-        idProfessor: "",
+        idProfessor: autenticacao.usuario.idUsuario,
         titulo: "",
         nomeMateria: "",
         quantAtividades: 0,
