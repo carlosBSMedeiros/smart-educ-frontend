@@ -20,10 +20,12 @@ function WordWall({ idAtividade, funcaoFinalizarJogo }: Props) {
         idTrilha: "",
         idTrilhaAtividade: "",
         idBancoQuestao: "",
+        enunciado:"",
         tipoAtividade: "",
         contudoTexto: "",
         iframe: "",
         concluida: "",
+        ordem:0,
         quantConcluido: 0
 
     });

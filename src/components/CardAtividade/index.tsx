@@ -10,6 +10,7 @@ import { toastrErroBuilder, toastrSucessoBuilder } from '../Alerts';
 import png from '../../assets/medalha.png'
 import Ranking from '../Ranking';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 declare interface Props {
     atividade: Atividade
@@ -133,16 +134,18 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
 
 function CardAtividadeProf(atividade:Atividade, tipoAtv:TipoAtividade){
     return (
-        <div className="card-atividade professor">
-            <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
-                {tipoAtv.nome}
+        <Link to={{ pathname: `/atividade/${atividade.id}`, }}>
+            <div className="card-atividade professor">
+                <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
+                    {tipoAtv.nome}
+                </div>
+                <div className="card-atividade-body">
+                    {atividade.titulo}
+                    <br />
+                    <b>Alunos que concluíram:</b> {atividade.quantConcluido}
+                </div>
             </div>
-            <div className="card-atividade-body">
-                {atividade.titulo}
-                <br />
-                <b>Alunos que concluíram:</b> {atividade.quantConcluido}
-            </div>
-        </div>
+        </Link>
     )
 }
 

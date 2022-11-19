@@ -112,7 +112,7 @@ function TurmaForm({ isNovo }: Props) {
                             </div>
                           <div className="form-group col-md-6">
                             <label htmlFor="idSerie">Série</label>
-                            <SerieSeletor name="idSerie" handlePesquisaSelector={handleInputChange} idSelecionar={turma && turma.idSerie ? turma.idSerie : 99} />
+                            <SerieSeletor name="idSerie" handlePesquisaSelector={handleInputChange} idSelecionar={turma.idSerie ?? 99} />
                           </div>
                             
                         </div>
