@@ -23,4 +23,18 @@
 
 .atividades-aluno-pai{
     margin: 2rem 0 ;
+    position: relative;
+}
+
+.atividades-aluno-pai button{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.atividades-aluno-pai button img{
+    width: 40px;
+    height: 40px;
 }

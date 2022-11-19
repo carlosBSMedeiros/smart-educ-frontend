@@ -34,24 +34,11 @@ var funcQuestoes: funcionalidadeInfos = {
     icone: QuestoesIcon
 }
 
-var funcRanking: funcionalidadeInfos = {
-    label: "Ranking",
-    rota: "ranking",
-    icone: RankingIcon
-}
-
 var funcAlunoTurma: funcionalidadeInfos = {
     label: "Turmas",
     rota: "alunoTurma",
     icone: TurmasIcon
 }
-
-var funcQuest: funcionalidadeInfos = {
-    label: "Questionarios",
-    rota: "questionario",
-    icone: QuestoesIcon
-}
-
 
 var funcionalidadesProf: funcionalidadeInfos[] = []
 var funcionalidadesAluno: funcionalidadeInfos[] = []
@@ -60,13 +47,9 @@ funcionalidadesProf.push(funcTurmas)
 funcionalidadesProf.push(funcMaterias)
 funcionalidadesProf.push(funcTrilhas)
 funcionalidadesProf.push(funcQuestoes)
-funcionalidadesProf.push(funcRanking)
 
-funcionalidadesAluno.push(funcMaterias)
 funcionalidadesAluno.push(funcAlunoTurma)
 funcionalidadesAluno.push(funcTrilhas)
-funcionalidadesAluno.push(funcRanking)
-funcionalidadesAluno.push(funcQuest)
 
 export function listaFuncionalidades(tipoUsuario: string) {
     if (tipoUsuario.toLowerCase() === 'aluno') {
