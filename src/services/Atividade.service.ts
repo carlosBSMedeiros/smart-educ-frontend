@@ -33,7 +33,7 @@ export function recuperarParaAluno(idAtividade:string, idAluno:string){
     return http.get(`/atividade/aluno/${idAluno}/atividade/${idAtividade}`)
 }
 
-export function validaratividade(atividade: Atividade){
+export function validarAtividade(atividade: Atividade){
 
     var erros: string[] = []
     if(!atividade){
@@ -61,6 +61,10 @@ export function validaratividade(atividade: Atividade){
 
     if(atividade.enunciado.trim() === ''){
         erros.push('Enunciado não pode ser Nulo')
+    }
+
+    if(atividade.titulo.trim() === ''){
+        erros.push('Título não pode ser Nulo')
     }
 
     if(atividade.ordem === 99 || atividade.ordem===null){
