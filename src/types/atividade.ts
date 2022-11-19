@@ -1,13 +1,15 @@
 export type Atividade = {
     id: string,
-    titulo: string,
     idTrilha: string,
     idTrilhaAtividade: string,
     idBancoQuestao: string,
     tipoAtividade: string,
     contudoTexto: string,
     iframe:string,
+    enunciado:string,
+    titulo:string,
     concluida: string,
+    ordem:number,
     quantConcluido:number
 }
 

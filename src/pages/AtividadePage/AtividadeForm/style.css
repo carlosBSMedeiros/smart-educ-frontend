@@ -1,0 +1,47 @@
+form{
+    margin: 10px 5rem;
+}
+
+.form-group{
+    margin: 10px 0;
+}
+
+.form-group label{
+    font-size: 1.5rem;
+}
+
+.form-group textarea{
+    height: 150px !important;
+}
+
+.form-group .form-control{
+    height: 50px;
+}
+
+.botoes-form-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 5rem;
+}
+
+.botoes-form-div.inc{
+    flex-direction: row-reverse;
+}
+
+.botoes-form-div.alt{
+    flex-direction: row;
+}
+
+.container-atividades-header{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.container-atividades-header h3{
+    font-weight: bolder
+}
+
+.container-atividades-trilha{
+    margin: 25px 5rem;
+}

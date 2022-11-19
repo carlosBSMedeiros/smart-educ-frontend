@@ -8,6 +8,7 @@ import AlunoTurmaPage from "../AlunoTurmaPage"
 import OrquestradorTrilhas from "../TrilhasPage/OrquestradorTrilhas"
 import QuestoesPage from "../QuestoesPage"
 import OrquestradorBancoQuestoes from "../QuestoesPage/OrquestradorBancoQuestoes"
+import OrquestradorAtividade from "../AtividadePage/OrquestradorAtividade"
 import OrquestradorMaterias from "../MateriasPage/OrquestradorMaterias"
 import OrquestradorTurmas from "../TurmasPage/OrquestradorTurmas"
 import NavbarLateralMobile, { DivMascaraMenuLateral } from "../../components/Navbar/NavbarLateralMobile"
@@ -49,6 +50,11 @@ function MainPage() {
                     <Route path="/trilhas" element={<TrilhasPage />}/>
                     <Route path="/trilhas/novo" element={<OrquestradorTrilhas isNovo={true} />}/>
                     <Route path="/trilhas/:id" element={<OrquestradorTrilhas isNovo={false} />}/>
+
+                    <Route path="/atividade/novo/:idTrilha" element={<OrquestradorAtividade isNovo={true} />}/>
+                    <Route path="/atividade/:id" element={<OrquestradorAtividade isNovo={false} />}/>
+                    
+
                     <Route path="/materias" element={<MateriasPage />}/>
                     <Route path="/materias/novo" element={<OrquestradorMaterias isNovo={true}/>}/>
                     <Route path="/materias/:id" element={<OrquestradorMaterias isNovo={false} />}/>

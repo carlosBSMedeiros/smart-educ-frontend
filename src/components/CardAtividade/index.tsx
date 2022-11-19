@@ -6,6 +6,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useState } from 'react';
 import AtividadeForm from "../Atividade"
 import { AtividadeAluno } from '../../types/TrilhaAlunoRequestNew'
+import { Link } from "react-router-dom";
 import { erroGenericoBuilder } from '../Alerts';
 
 declare interface Props {
@@ -91,16 +92,18 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
 
 function CardAtividadeProf(atividade:Atividade, tipoAtv:TipoAtividade){
     return (
-        <div className="card-atividade professor">
-            <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
-                {tipoAtv.nome}
+        <Link to={{ pathname: `/atividade/${atividade.id}`, }}>
+            <div className="card-atividade professor">
+                <div className={`card-atividade-header ${atividade.tipoAtividade.toLowerCase()}`}>
+                    {tipoAtv.nome}
+                </div>
+                <div className="card-atividade-body">
+                    {atividade.titulo}
+                    <br />
+                    <b>Alunos que concluíram:</b> {atividade.quantConcluido}
+                </div>
             </div>
-            <div className="card-atividade-body">
-                {atividade.titulo}
-                <br />
-                <b>Alunos que concluíram:</b> {atividade.quantConcluido}
-            </div>
-        </div>
+        </Link>
     )
 }
 

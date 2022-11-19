@@ -32,6 +32,11 @@ function TrilhasForm({ isNovo }: Props) {
         quantConcluido: 0
     })
 
+
+    const novaAtividade = () => {
+        navegacao(`/atividade/novo/${id}`)
+    }
+
     isNovo = (!trilha.id || trilha.id.trim() === "")
 
     useEffect(() => {
@@ -193,6 +198,7 @@ function TrilhasForm({ isNovo }: Props) {
                     <h3>Atividades</h3>
                 </div>
                 <div className="container-atividades-trilha">
+                    <button className="btn btn-cor-5" onClick={novaAtividade}>Novo</button>
                     <AtividadesListagemProf idTrilha={trilha.id}></AtividadesListagemProf>
                 </div>
             </>

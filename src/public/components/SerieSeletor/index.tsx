@@ -8,30 +8,24 @@ declare interface Props{
     handlePesquisaSelector: React.ChangeEventHandler<HTMLSelectElement>
 }
 
-function MateriaSeletor({name, idSelecionar, handlePesquisaSelector}:Props) {
-    var recuperouSeries = false; 
-    
+function SerieSelector({name, idSelecionar, handlePesquisaSelector}:Props) {
 
     useEffect(() => {
         ListAll()
             .then(response => {
                 setSeries(response.data as Serie[])
-                recuperouSeries = true;
             }).catch(error => {
                 alert(error)
             })
     }, [])
 
     const [series, setSeries] = useState<Serie[]>();
-    const [idSelecionarEst, setIdSelecionarEst] = useState(idSelecionar)
 
-
-    console.log('idSelecionarEst', idSelecionarEst)
     return (
         <>
             <select 
                 className="form-select form-control"
-                defaultValue={idSelecionarEst ? idSelecionarEst : "99"} 
+                value={idSelecionar} 
                 aria-label="Matérias"
                 name={name}
                 onChange={handlePesquisaSelector}
@@ -43,18 +37,9 @@ function MateriaSeletor({name, idSelecionar, handlePesquisaSelector}:Props) {
                     })
                 }
             </select>
-            {
-               adicionarIconCarregando()
-            }
-            
         </>
     )
 
-    function adicionarIconCarregando(){
-        var returnValue = recuperouSeries ? ( <i className='fa-circle-o-notch fa-spin' />) : ''
-        return returnValue
-    }
-
 }
 
-export default MateriaSeletor;
+export default SerieSelector;

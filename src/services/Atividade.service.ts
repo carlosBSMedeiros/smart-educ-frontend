@@ -1,6 +1,77 @@
-import { AtividadeConcluida } from './../types/AtividadeConcluida';
+import { Atividade } from '../types/atividade';
+import { AtividadeConcluida } from '../types/AtividadeConcluida';
 import { RespostaQuest } from '../types/RespostaQuest';
 import http from '../utils/requests';
+
+
+
+export function incluirAtividade(novaatividade: Atividade){
+    return http.post(`/atividade`, novaatividade)
+}
+
+export function alterarAtividade(atividadeAlt: Atividade){
+    return http.put(`/atividade`, atividadeAlt)
+}
+
+export function excluirAtividade(idAtividade: string){
+    return http.delete(`/atividade/${idAtividade}`)
+}
+
+export function recuperarAtividadesIdProfessor(idProfessor:string){
+    return http.get(`/atividade/professor/${idProfessor}`)
+}
+
+export function recuperarAtividadesAluno(){
+    return http.get('/atividade')
+}
+
+export function recuperarPorId(id:string){
+    return http.get(`/atividade/${id}`)
+}
+
+export function recuperarParaAluno(idAtividade:string, idAluno:string){
+    return http.get(`/atividade/aluno/${idAluno}/atividade/${idAtividade}`)
+}
+
+export function validaratividade(atividade: Atividade){
+
+    var erros: string[] = []
+    if(!atividade){
+        erros.push('A atividade não é válida!')
+    }
+
+
+    if(atividade.tipoAtividade === 'TEXTO'){
+        if(atividade.contudoTexto.trim() === ''){
+            erros.push('O texto não pode ser nulo') 
+        }
+    }
+
+    if(atividade.idBancoQuestao === 'QUEST'){
+        if(atividade.contudoTexto.trim() === ''){
+            erros.push('O Banco de questão não pode ser nulo') 
+        }
+    }
+
+    if(atividade.idBancoQuestao === 'JOGO'){
+        if(atividade.iframe.trim() === ''){
+            erros.push('O Iframe do jogo não pode ser nulo') 
+        }
+    }
+
+    if(atividade.enunciado.trim() === ''){
+        erros.push('Enunciado não pode ser Nulo')
+    }
+
+    if(atividade.ordem === 99 || atividade.ordem===null){
+        erros.push('ordem deve ser preenchido')
+    }
+
+    return erros
+}
+
+
+
 
 export function recuperarAtividadesIdTrilha(idTrilha:string){
     return http.get(`/atividade/trilha/${idTrilha}`)
