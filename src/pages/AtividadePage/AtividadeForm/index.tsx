@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react"
 import HeaderPagina from "../../../components/HeaderPagina";
 import TrilhaSeletor from "../../../public/components/TrilhaSeletor";
-import { incluirAtividade, recuperarPorId, validaratividade, alterarAtividade, excluirAtividade } from '../../../services/Atividade.service';
+import { incluirAtividade, recuperarPorId, validarAtividade, alterarAtividade, excluirAtividade } from '../../../services/Atividade.service';
 import './style.css'
 import { Atividade } from '../../../types/atividade'
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../components/Alerts";
@@ -65,7 +65,7 @@ function AtividadeForm({ isNovo }: Props) {
     }
 
     function handleSubmit() {
-        var errosValidacao: string[] = validaratividade(atividade)
+        var errosValidacao: string[] = validarAtividade(atividade)
         if (errosValidacao.length > 0) {
             erroGenericoBuilder.build(errosValidacao).fire()
             return;
@@ -91,6 +91,8 @@ function AtividadeForm({ isNovo }: Props) {
                     toastrSucessoBuilder.build('Atividade alterada com sucesso!').fire()
                     setAtividade(response.data as Atividade)
                 }).catch(error => {
+                    console.log(error);
+                    
                     erroGenericoBuilder.buildStr('Ocorreu um problema para alterar sua atividade!').fire()
                 })
         }
