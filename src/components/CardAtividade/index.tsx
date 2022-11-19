@@ -6,7 +6,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useState } from 'react';
 import AtividadeForm from "../Atividade"
 import { AtividadeAluno } from '../../types/TrilhaAlunoRequestNew'
-import { erroGenericoBuilder } from '../Alerts';
+import { erroGenericoBuilder, toastrErroBuilder, toastrSucessoBuilder } from '../Alerts';
 
 declare interface Props {
     atividade: Atividade
@@ -59,10 +59,15 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
     }
 
     function verificarPermissaoExecucaoAtividade(){
+        if(atividade.concluida){
+            toastrSucessoBuilder.build('Atividade já concluída').fire()
+            return;
+        }
+
         if(atividade.getAnterior || atividade.ordem === 1){
             toggleModal();
         } else{
-            erroGenericoBuilder.buildStr("Você deve concluir a atividade anterior para realizar essa atividade!").fire();
+            toastrErroBuilder.build("Você deve concluir a atividade anterior para realizar essa atividade!").fire();
         }
     }
 

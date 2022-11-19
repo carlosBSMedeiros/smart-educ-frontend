@@ -1,7 +1,7 @@
 .container-atividades{
     border: 1px solid var( --color-2);
     border-radius: 5px;
-    min-height: 50vh;
+    height: 50vh;
     padding: 2rem 4rem;
     display: flex;
     flex-direction: row;
@@ -10,13 +10,21 @@
     align-items: center
 }
 
+@media (max-width: 600px){
+  .container-atividades{
+    flex-direction: column-reverse;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
+
 .container-atividades::-webkit-scrollbar {
     width: 6px; 
     height: 6px;            
-  }
+}
   
 .container-atividades::-webkit-scrollbar-thumb {
     background-color: var(--color-3);  
     border-radius: 20px;      
-  }
+}
 

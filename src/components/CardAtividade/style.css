@@ -3,6 +3,7 @@
     position: relative;
     flex-direction: column;
     height: 150px;
+    min-height: 150px;
     width: 200px;
     min-width: 200px;
     background-color: var(--color-4);
@@ -85,6 +86,16 @@
     min-height: 1rem;
     background-color: var(--color-3);
 }
+
+@media (max-width: 600px){
+    .card-atividade-ligacao{
+        min-height: 50px;
+        height: 100px;
+        min-width: 1rem;
+        width: 1rem;
+    }
+  }
+  
 
 .label-ativ-conc{
     color: green;

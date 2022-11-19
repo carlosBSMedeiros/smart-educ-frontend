@@ -83,5 +83,25 @@ export var toastrSucessoBuilder = {
     }
 }
 
+export var toastrErroBuilder = {
+    build: function(titulo:string){
+        var toastr  = Swal.mixin({
+            toast: true,
+            title: titulo,
+            icon: 'error',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+        return toastr
+    }
+}
+
+
 //#endregion
 
