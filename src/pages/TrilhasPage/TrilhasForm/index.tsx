@@ -9,6 +9,7 @@ import { TrilhaRequest } from '../../../types/trilha'
 import { carregando, erroGenericoBuilder, toastrSucessoBuilder } from "../../../components/Alerts";
 import { AtividadesListagemProf } from '../../../components/AtividadesListagem'
 import Swal from "sweetalert2";
+import pngAdd from '../../../assets/add-branco.png'
 
 declare interface Props {
     isNovo: boolean
@@ -198,7 +199,12 @@ function TrilhasForm({ isNovo }: Props) {
                     <h3>Atividades</h3>
                 </div>
                 <div className="container-atividades-trilha">
-                    <button className="btn btn-cor-5" onClick={novaAtividade}>Novo</button>
+                    <div className="container-atividades-trilha-comandos">
+                        <button className="btn btn-cor-5" onClick={novaAtividade}>
+                            Adicionar Aividade
+                            <img src={pngAdd} alt="Add" />
+                        </button>
+                    </div>
                     <AtividadesListagemProf idTrilha={trilha.id}></AtividadesListagemProf>
                 </div>
             </>

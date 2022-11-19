@@ -44,4 +44,23 @@ form{
 
 .container-atividades-trilha{
     margin: 25px 5rem;
+    
 }
+
+.container-atividades-trilha-comandos{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 3px;
+}
+
+.container-atividades-trilha-comandos button {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.container-atividades-trilha-comandos button img {
+    margin-left: 5px;
+}
+
+
