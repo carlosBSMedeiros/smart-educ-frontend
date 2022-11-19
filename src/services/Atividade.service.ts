@@ -5,11 +5,13 @@ import http from '../utils/requests';
 
 
 
-export function incluirAtividade(novaatividade: Atividade){
-    return http.post(`/atividade`, novaatividade)
+export function incluirAtividade(novaAtividade: Atividade){
+    novaAtividade.iframe = normalizaDados(novaAtividade.iframe);
+    return http.post(`/atividade`, novaAtividade)
 }
 
 export function alterarAtividade(atividadeAlt: Atividade){
+    atividadeAlt.iframe = normalizaDados(atividadeAlt.iframe);
     return http.put(`/atividade`, atividadeAlt)
 }
 
@@ -83,6 +85,11 @@ export function recuperarAtividadesIdTrilha(idTrilha:string){
 
 export function getById(id:string){
     return http.get(`/atividade/${id}`)
+}
+
+
+const normalizaDados = (iframe:string) =>{
+    return iframe.replaceAll('"',"'")
 }
 
 
