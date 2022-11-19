@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { TrilhaRequest } from "../../types/trilha"
 import styled from "styled-components"
+import png from '../../assets/medalha.png'
 
 declare interface Props {
     trilha: TrilhaRequest
@@ -29,6 +30,9 @@ function CardTrilha({ trilha }: Props) {
                         <div className="cardTrilhaBodyDescricao">
                             {getDescricaoTrilhaResumida(trilha.descricao)}
                         </div>
+                        {trilha.concluida ? (
+                        <img src={png} alt="medalha" id="TooltipRanking" />
+                    ) : (<></>)}
                     </div>
                 </div>
             </Link>

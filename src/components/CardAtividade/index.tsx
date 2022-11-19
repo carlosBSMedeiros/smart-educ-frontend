@@ -122,7 +122,7 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
                     <br />
                     {ativConcluidaOuNao(atividade.concluida)}
                     {atividade.concluida ? (
-                        <img src={png} alt="Voltar" onClick={toggleModalRanking} id="TooltipRanking" />
+                        <img src={png} alt="medalha" onClick={toggleModalRanking} id="TooltipRanking" />
                     ) : (<></>)}
                 </div>
             </div>
