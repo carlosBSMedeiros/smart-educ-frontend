@@ -35,11 +35,10 @@ function TrilhaAluno() {
         if (!trilha.id || trilha.id.trim() === "") {
             return;
         }
-        recuperarTrilha(trilha.id);
-
+        recuperarTrilha();
     }, [])
 
-    function recuperarTrilha(idTrilha: string) {
+    function recuperarTrilha() {
         var carregandoRef = carregando
         carregandoRef.fire()
         recuperarParaAluno(trilha.id, autenticador.usuario.idUsuario)

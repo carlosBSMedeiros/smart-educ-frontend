@@ -10,7 +10,6 @@ declare interface Props {
 var AtividadesListagemAluno = function ({ atividadesParam, atualizarAtividades }: Props) {
 
     var atividades: AtividadeAluno[] = (!atividadesParam || atividadesParam === undefined) ? [] : atividadesParam
-    console.log('AtividadesListagemAluno: ', atividades)
 
     return (
         <>

@@ -6,7 +6,10 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useState } from 'react';
 import AtividadeForm from "../Atividade"
 import { AtividadeAluno } from '../../types/TrilhaAlunoRequestNew'
-import { erroGenericoBuilder, toastrErroBuilder, toastrSucessoBuilder } from '../Alerts';
+import { toastrErroBuilder, toastrSucessoBuilder } from '../Alerts';
+import png from '../../assets/medalha.png'
+import Ranking from '../Ranking';
+import styled from 'styled-components';
 
 declare interface Props {
     atividade: Atividade
@@ -23,14 +26,17 @@ export function CardAtividade({ atividade }: Props) {
 
 export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
 
-    const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [modalAtividadeOpen, setModalAtividadeOpen] = useState<boolean>(false)
+    const [modalRankingOpen, setModalRankingOpen] = useState<boolean>(false)
 
     var tipoAtv: TipoAtividade = getTipoAtividadeCompleto(atividade.tipoAtividade)
 
     function ativConcluidaOuNao(concluida:boolean){
         if(concluida){
             return(
-                <b className='label-ativ-conc'>Concluída!</b> 
+                <div>
+                    <b className='label-ativ-conc'>Concluída!</b> 
+                </div>
             )
         }
         return(
@@ -38,34 +44,61 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
         )
     }
 
-    function toggleModal() {
-        setModalOpen(!modalOpen)
+    function toggleModalAtividade() {
+        setModalAtividadeOpen(!modalAtividadeOpen)
+    }
+
+    function toggleModalRanking() {
+        setModalRankingOpen(!modalRankingOpen)
     }
 
     function ModalAtividadeAluno(){
         return (
-            <Modal isOpen={modalOpen} toggle={toggleModal} size="xl">
-                <ModalHeader toggle={toggleModal}>{tipoAtv.nome}</ModalHeader>
+            <Modal isOpen={modalAtividadeOpen} toggle={toggleModalAtividade} size="xl">
+                <ModalHeader toggle={toggleModalAtividade}>{tipoAtv.nome}</ModalHeader>
                 <ModalBody>
                     <AtividadeForm atividade={atividade} fecharModalAtualizarListaAtividades={fecharModalAtualizarListaAtividades}></AtividadeForm>
                 </ModalBody>
             </Modal>
         )
     }
+
+    function ModalRankingAtividade(){
+
+        const RankingPaiStyled = styled.div`
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+        `
+ 
+        return (
+            <Modal isOpen={modalRankingOpen} toggle={toggleModalRanking} size="md">
+                <ModalHeader toggle={toggleModalRanking}>
+                    Ranking                  
+                </ModalHeader>
+                <ModalBody>
+                    <RankingPaiStyled>
+                        <Ranking id={atividade.id} tipo='atividade'/>
+                    </RankingPaiStyled>
+                </ModalBody>
+            </Modal>
+        )
+    }
     
     var fecharModalAtualizarListaAtividades = function(){
-        toggleModal();
+        toggleModalAtividade();
         atualizarAtividades();
     }
 
     function verificarPermissaoExecucaoAtividade(){
         if(atividade.concluida){
-            toastrSucessoBuilder.build('Atividade já concluída').fire()
+            toggleModalRanking();
             return;
         }
 
         if(atividade.getAnterior || atividade.ordem === 1){
-            toggleModal();
+            toggleModalAtividade();
         } else{
             toastrErroBuilder.build("Você deve concluir a atividade anterior para realizar essa atividade!").fire();
         }
@@ -87,9 +120,13 @@ export function CardAtividadeAluno({atividade, atualizarAtividades}:PropsAluno){
                     {atividade.titulo}
                     <br />
                     {ativConcluidaOuNao(atividade.concluida)}
+                    {atividade.concluida ? (
+                        <img src={png} alt="Voltar" onClick={toggleModalRanking} id="TooltipRanking" />
+                    ) : (<></>)}
                 </div>
             </div>
             <ModalAtividadeAluno></ModalAtividadeAluno>
+            <ModalRankingAtividade></ModalRankingAtividade>
         </>
     )
 }

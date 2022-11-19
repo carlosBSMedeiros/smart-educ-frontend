@@ -37,7 +37,7 @@ const NovaTrilhaButton = styled.button`
 //#endregion
 
 function TrilhasPage() {
-    var autenticador = useAutenticacaoContext();
+    const autenticador = useAutenticacaoContext();
     if(autenticador.usuario.tipoUsuario === 'ALUNO'){
         return <TrilhasPageAluno/>
     } else{
@@ -46,12 +46,13 @@ function TrilhasPage() {
 }
 
 function TrilhasPageAluno(){
+    const autenticador = useAutenticacaoContext();
     const [trilhas, setTrilhas] = useState<TrilhaRequest[]>([])
 
     useEffect(() => {
         var carregandoObj = carregando;
         carregandoObj.fire()
-        recuperarTrilhasAluno()
+        recuperarTrilhasAluno(autenticador.usuario.idUsuario)
             .then(response => {
                 carregandoObj.close()
                 setTrilhas(response.data as TrilhaRequest[])
