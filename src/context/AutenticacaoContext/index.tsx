@@ -1,10 +1,8 @@
 import React from 'react';
 import { Usuario, Credenciais } from '../../types/usuario'
 import { login as LoginService, logout as LogoutService, getUsuarioLogado } from '../../services/Autenticacao.service'
-import {fimSessaoTimeout} from '../../components/Alerts'
 import { useNavigate } from 'react-router-dom';
 import { carregando } from '../../components/Alerts/index'
-
 
 interface AutenticacaoContextType {
     usuario: Usuario;
@@ -37,7 +35,6 @@ export function AutenticacaoProvider({ children }: { children: React.ReactNode }
         carregando.fire()
         LoginService(credencias).then(usuarioLogado => {
             setUsuario(usuarioLogado)
-            iniciarTimerExpirarSessao()
             onSucces();
         }).catch(error => {
             if (error.response) {
@@ -53,16 +50,6 @@ export function AutenticacaoProvider({ children }: { children: React.ReactNode }
         LogoutService();
         navegador('login');
     };
-
-    function iniciarTimerExpirarSessao(){
-        setTimeout(()=>{
-            fimSessaoTimeout.fire({
-                title: 'Sua sessão expirou. Você será redirecionado a página de login'
-            }).then(() =>{
-                logout();
-            })
-        }, 60 * 60 * 980); //59min
-    }
 
     var value = { usuario, login, logout };
 

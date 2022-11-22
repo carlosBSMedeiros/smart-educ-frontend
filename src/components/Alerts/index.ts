@@ -25,11 +25,6 @@ export var errorLoginAlert = Swal.mixin({
     }
 })
 
-export var fimSessaoTimeout = Swal.mixin({
-    icon: 'warning',
-    showConfirmButton: true,
-})
-
 export var carregando = Swal.mixin({
     title: 'Aguarde...',
     backdrop: true,
